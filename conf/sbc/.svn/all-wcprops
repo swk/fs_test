@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/11417/configs/sbc
+END
+freeswitch.xml
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/11413/configs/sbc/freeswitch.xml
+END
+mime.types
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/11403/configs/sbc/mime.types
+END
+vars.xml
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/11403/configs/sbc/vars.xml
+END

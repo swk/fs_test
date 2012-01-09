@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/11403/configs/sbc/dialplan/default
+END
+00_pizza_demo.xml
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/11403/configs/sbc/dialplan/default/00_pizza_demo.xml
+END
+99999_enum.xml
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/11403/configs/sbc/dialplan/default/99999_enum.xml
+END
+01_example.com.xml
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/11403/configs/sbc/dialplan/default/01_example.com.xml
+END

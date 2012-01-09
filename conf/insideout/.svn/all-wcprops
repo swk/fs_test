@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/11425/configs/insideout
+END
+openzap.conf
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/11403/configs/insideout/openzap.conf
+END
+freeswitch.xml
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/11425/configs/insideout/freeswitch.xml
+END
+extensions.conf
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/11403/configs/insideout/extensions.conf
+END
+voicemail.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/11403/configs/insideout/voicemail.tpl
+END
+tetris.ttml
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/11403/configs/insideout/tetris.ttml
+END
+mime.types
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/11403/configs/insideout/mime.types
+END
+vars.xml
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/11403/configs/insideout/vars.xml
+END
+web-vm.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/11403/configs/insideout/web-vm.tpl
+END
+fur_elise.ttml
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/11403/configs/insideout/fur_elise.ttml
+END
+tones.conf
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/11403/configs/insideout/tones.conf
+END
+notify-voicemail.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/11403/configs/insideout/notify-voicemail.tpl
+END
