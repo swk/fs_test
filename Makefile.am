@@ -485,7 +485,7 @@ vm-sync:
 	$(INSTALL) -m 644 $(switch_srcdir)/conf/default/lang/en/demo/* $(DESTDIR)$(sysconfdir)/lang/en/demo
 
 config-%:
-	y1test -d $(DESTDIR)$(sysconfdir) || $(mkinstalldirs) $(DESTDIR)$(sysconfdir)
+	test -d $(DESTDIR)$(sysconfdir) || $(mkinstalldirs) $(DESTDIR)$(sysconfdir)
 	for conffile in `cd $(switch_srcdir)/conf/$* && find . -name \*.xml && find . -name \*.conf && find . -name \*.tpl  && find . -name \*.ttml && find . -name mime.types` ; do \
 		dir=`echo $$conffile | sed -e 's|^\.||' | sed -e 's|/[^/]*$$||'`; \
 		filename=`echo $$conffile | sed -e 's|^\.||' | sed -e 's|^.*/||'`; \
