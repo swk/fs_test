@@ -495,7 +495,7 @@ config-%:
 			$(INSTALL) -m 644 $(switch_srcdir)/conf/$*/$$dir/$$filename $(DESTDIR)$(sysconfdir)$$dir; \
 	done
 
-samples-conf: config-default
+samples-conf: config-vanilla
 
 samples-htdocs: 
 	test -d $(DESTDIR)$(htdocsdir) || $(mkinstalldirs) $(DESTDIR)$(htdocsdir)
