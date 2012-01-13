@@ -41,21 +41,21 @@
 #
 # disable rpath checking
 %define __arch_install_post /usr/lib/rpm/check-buildroot
-%define _prefix   /opt/freeswitch
+%define _prefix   /usr/local/freeswitch
 %define prefix    %{_prefix}
-%define sysconfdir	/opt/freeswitch/conf
+%define sysconfdir	/usr/local/freeswitch/conf
 %define _sysconfdir	%{sysconfdir}
-%define logfiledir	/var/log/freeswitch
-%define runtimedir	/var/run/freeswitch
+%define logfiledir	/usr/local/freeswitch/log
+%define runtimedir	/usr/local/freeswitch/run
 
 Name:         	freeswitch
 Summary:      	FreeSWITCH open source telephony platform
 License:      	MPL
 Group:        	Productivity/Telephony/Servers
-Version:      	1.0.7
+Version:      	1.1.0
 Release:      	trunk
 URL:          	http://www.freeswitch.org/
-Packager:     	Michal Bielicki
+Packager:     	Ken Rice
 Vendor:       	http://www.freeswitch.org/
 
 ######################################################################################################################
@@ -94,7 +94,7 @@ BuildRequires: openldap-devel
 %endif
 BuildRequires: autoconf
 BuildRequires: automake
-BuildRequires: curl-devel
+#BuildRequires: curl-devel
 BuildRequires: gcc-c++
 BuildRequires: gnutls-devel
 BuildRequires: libtool >= 1.5.17
@@ -130,7 +130,7 @@ Requires: python26
 Requires: alsa-lib
 Requires: libogg
 Requires: libvorbis
-Requires: curl
+#Requires: curl
 Requires: ncurses
 Requires: openssl
 Requires: unixODBC
@@ -443,7 +443,7 @@ APPLICATION_MODULES_SZ="applications/mod_sms applications/mod_snom applications/
 						applications/mod_valet_parking applications/mod_vmd applications/mod_voicemail \
 						applications/mod_voicemail_ivr"
 
-APPLICATIONS_MODULES="$APPLICATION_MODULES_AC $APPLICATION_MODULES_DE $APPLICATION_MODULES_FR $APPLICATION_MODULES_SZ"
+APPLICATIONS_MODULES="$APPLICATION_MODULES_AC $APPLICATION_MODULES_DE prefix$APPLICATION_MODULES_FR $APPLICATION_MODULES_SZ"
 ######################################################################################################################
 #
 #				Automatic Speech Recognition and Text To Speech Modules
@@ -577,12 +577,7 @@ fi
 		--libdir=%{prefix}/lib \
 		--enable-core-libedit-support \
 		--enable-core-odbc-support \
-%ifos linux
-%if 0%{?fedora_version} >= 8
-%else
-                --with-libcurl \
-%endif
-%endif
+                --without-libcurl \
                 --with-openssl \
 		%{?configure_options}
 
@@ -896,7 +891,7 @@ fi
 #			Modules in Alphabetical Order, please keep them that way..
 #
 ######################################################################################################################
-%{prefix}/mod/mod_abstraction.so*
+%{prefix}/mod/mod_abtraction.so*
 %{prefix}/mod/mod_amrwb.so*
 %{prefix}/mod/mod_avmd.so*
 %{prefix}/mod/mod_blacklist.so*
