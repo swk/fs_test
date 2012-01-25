@@ -2022,10 +2022,6 @@ void *SWITCH_THREAD_FUNC sofia_profile_thread_run(switch_thread_t *thread, void 
 
 	sofia_glue_add_profile(profile->name, profile);
 
-	if (profile->pres_type) {
-		sofia_presence_establish_presence(profile);
-	}
-	
 	switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_DEBUG, "Starting thread for %s\n", profile->name);
 
 	profile->started = switch_epoch_time_now(NULL);
@@ -7137,11 +7133,13 @@ void sofia_handle_sip_i_info(nua_t *nua, sofia_profile_t *profile, nua_handle_t 
 			if (!strncasecmp(sip->sip_content_type->c_type, "application", 11) && !strcasecmp(sip->sip_content_type->c_subtype, "media_control+xml")) {
 				switch_core_session_t *other_session;
 				
-				switch_channel_set_flag(channel, CF_VIDEO_REFRESH_REQ);
-
-				if (switch_core_session_get_partner(session, &other_session) == SWITCH_STATUS_SUCCESS) {
-					sofia_glue_build_vid_refresh_message(other_session, sip->sip_payload->pl_data);
-					switch_core_session_rwunlock(other_session);
+				if (switch_channel_test_flag(channel, CF_VIDEO)) {
+					if (switch_core_session_get_partner(session, &other_session) == SWITCH_STATUS_SUCCESS) {
+						sofia_glue_build_vid_refresh_message(other_session, sip->sip_payload->pl_data);
+						switch_core_session_rwunlock(other_session);
+					} else {
+						switch_channel_set_flag(channel, CF_VIDEO_REFRESH_REQ);
+					}
 				}
 
 			} else if (!strncasecmp(sip->sip_content_type->c_type, "application", 11) && !strcasecmp(sip->sip_content_type->c_subtype, "dtmf-relay")) {
