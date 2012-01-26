@@ -742,31 +742,31 @@ Requires:       %{name} = %{version}-%{release}
 XMPP support for FreeSWITCH open source telephony platform. Allows FreeSWITCH
 to be used as a client for GoogleTalk or other XMPP Servers.
 
-%package endpoint-gsmopen
-Summary:        Generic GSM enpoint support for FreeSWITCH open source telephony platform
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
+#%package endpoint-gsmopen
+#Summary:        Generic GSM enpoint support for FreeSWITCH open source telephony platform
+#Group:          System/Libraries
+#Requires:       %{name} = %{version}-%{release}
+#
+#%description endpoint-gsmopen
+#GSMopen is an endpoint (channel driver) that allows an SMS to be sent or 
+#received from FreeSWITCH as well as incoming and outgoing GSM voice calls.
+#SMS is handled via the standard CHAT API in FreeSWITCH.
 
-%description endpoint-gsmopen
-GSMopen is an endpoint (channel driver) that allows an SMS to be sent or 
-received from FreeSWITCH as well as incoming and outgoing GSM voice calls.
-SMS is handled via the standard CHAT API in FreeSWITCH.
+#%package endpoint-h323
+#Summary:        H.323 enpoint support for FreeSWITCH open source telephony platform
+#Group:          System/Libraries
+#Requires:       %{name} = %{version}-%{release}
+#
+#%description endpoint-h323
+#H.323 enpoint support for FreeSWITCH open source telephony platform
 
-%package endpoint-h323
-Summary:        H.323 enpoint support for FreeSWITCH open source telephony platform
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
-
-%description endpoint-h323
-H.323 enpoint support for FreeSWITCH open source telephony platform
-
-%package endpoint-khomp
-Summary:        khomp endpoint support for FreeSWITCH open source telephony platform
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
-
-%description endpoint-khomp
-Khomp hardware endpoint support for FreeSWITCH open source telephony platform.
+#%package endpoint-khomp
+#Summary:        khomp endpoint support for FreeSWITCH open source telephony platform
+#Group:          System/Libraries
+#Requires:       %{name} = %{version}-%{release}
+#
+#%description endpoint-khomp
+#Khomp hardware endpoint support for FreeSWITCH open source telephony platform.
 
 %package endpoint-portaudio
 Summary:        PortAudio endpoint support for FreeSWITCH open source telephony platform
@@ -884,13 +884,13 @@ Requires:	 %{name} = %{version}-%{release}
 %description event-cdr-sqlite
 SQLite CDR Logger for FreeSWITCH.
 
-%package event-erlang-event
-Summary:	Erlang Event Module for the FreeSWITCH open source telephony platform
-Group:		System/Libraries
-Requires:	 %{name} = %{version}-%{release}
-
-%description event-erlang-event
-Erlang Event Module for FreeSWITCH.
+#%package event-erlang-event
+#Summary:	Erlang Event Module for the FreeSWITCH open source telephony platform
+#Group:		System/Libraries
+#Requires:	 %{name} = %{version}-%{release}
+#
+#%description event-erlang-event
+#Erlang Event Module for FreeSWITCH.
 
 %package event-multicast
 Summary:	Multicast Event System for the FreeSWITCH open source telephony platform
@@ -900,13 +900,13 @@ Requires:	 %{name} = %{version}-%{release}
 %description event-multicast
 Multicast Event System for FreeSWITCH.
 
-%package event-zmq
-Summary:	ZeroMQ Event System for the FreeSWITCH open source telephony platform
-Group:		System/Libraries
-Requires:	 %{name} = %{version}-%{release}
-
-%description event-zmq
-ZeroMQ Event System for FreeSWITCH.
+#%package event-zmq
+#Summary:	ZeroMQ Event System for the FreeSWITCH open source telephony platform
+#Group:		System/Libraries
+#Requires:	 %{name} = %{version}-%{release}
+#
+#%description event-zmq
+#ZeroMQ Event System for FreeSWITCH.
 
 %package event-json-cdr
 Summary:	JSON CDR Logger for the FreeSWITCH open source telephony platform
@@ -1179,7 +1179,7 @@ APPLICATION_MODULES_AC="applications/mod_abstraction applications/mod_avmd appli
 			applications/mod_commands applications/mod_conference applications/mod_curl"
 APPLICATION_MODULES_DE="applications/mod_db applications/mod_directory applications/mod_distributor \
 			applications/mod_dptools applications/mod_easyroute applications/mod_enum applications/mod_esf \
-			applications/mod_expr"
+			applications/mod_esl applications/mod_expr"
 APPLICATION_MODULES_FR="applications/mod_fifo applications/fsk applications/mod_fsv applications/mod_hash applications/mod_httapi \
 			applications/mod_http_cache applications/mod_lcr applications/mod_limit applications/mod_memcache \
 			applications/mod_nibblebill applications/mod_redis applications/mod_rss" 
@@ -1229,9 +1229,11 @@ DIRECTORIES_MODULES=""
 #						Endpoints
 #
 ######################################################################################################################
-ENDPOINTS_MODULES="endpoints/mod_dingaling ../../libs/freetdm/mod_freetdm endpoints/mod_gsmopen endpoints/mod_h323 \
-			endpoints/mod_khomp endpoints/mod_loopback endpoints/mod_portaudio endpoints/mod_rtmp \
+ENDPOINTS_MODULES="endpoints/mod_dingaling ../../libs/freetdm/mod_freetdm \
+			endpoints/mod_loopback endpoints/mod_portaudio endpoints/mod_rtmp \
 			endpoints/mod_skinny endpoints/mod_skypopen endpoints/mod_sofia"
+
+## DISABLED MODULES DUE TO BUILD ISSUES endpoints/mod_gsmopen endpoints/mod_h323 endpoints/mod_khomp 
  
 ######################################################################################################################
 #
@@ -1239,10 +1241,11 @@ ENDPOINTS_MODULES="endpoints/mod_dingaling ../../libs/freetdm/mod_freetdm endpoi
 #
 ######################################################################################################################
 EVENT_HANDLERS_MODULES="event_handlers/mod_cdr_csv event_handlers/mod_cdr_pg_csv event_handlers/mod_cdr_sqlite \
-			event_handlers/mod_erlang_event event_handlers/mod_event_multicast \
-			event_handlers/mod_event_socket event_handlers/mod_event_zmq event_handlers/mod_json_cdr \
+			 event_handlers/mod_event_multicast \
+			event_handlers/mod_event_socket event_handlers/mod_json_cdr \
 			event_handlers/mod_snmp"
 
+#### BUILD ISSUES NET RESOLVED FOR RELEASE event_handlers/mod_event_zmq event_handlers/mod_erlang_event
 ######################################################################################################################
 #
 #					File and Audio Format Handlers
@@ -1933,17 +1936,17 @@ fi
 %defattr(-,freeswitch,daemon)
 %{prefix}/mod/mod_dingaling.so*
 
-%files endpoint-gsmopen
-%defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_gsmopen.so*
+#%files endpoint-gsmopen
+#%defattr(-,freeswitch,daemon)
+#%{prefix}/mod/mod_gsmopen.so*
 
-%files endpoint-h323
-%defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_h323.so*
+#%files endpoint-h323
+#%defattr(-,freeswitch,daemon)
+#%{prefix}/mod/mod_h323.so*
 
-%files endpoint-khomp
-%defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_khomp.so*
+#%files endpoint-khomp
+#%defattr(-,freeswitch,daemon)
+#%{prefix}/mod/mod_khomp.so*
 
 %files endpoint-portaudio
 %defattr(-,freeswitch,daemon)
@@ -2009,17 +2012,17 @@ fi
 %defattr(-, freeswitch, daemon)
 %{prefix}/mod/mod_cdr_sqlite.so*
 
-%files event-erlang-event
-%defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_erlang-event.so*
+#%files event-erlang-event
+#%defattr(-, freeswitch, daemon)
+#%{prefix}/mod/mod_erlang-event.so*
 
 %files event-multicast
 %defattr(-, freeswitch, daemon)
 %{prefix}/mod/mod_event_multicast.so*
 
-%files event-zmq
-%defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_xmq.so*
+#%files event-zmq
+#%defattr(-, freeswitch, daemon)
+#%{prefix}/mod/mod_xmq.so*
 
 %files event-json-cdr
 %defattr(-, freeswitch, daemon)
