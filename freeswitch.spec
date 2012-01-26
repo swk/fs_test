@@ -1547,82 +1547,20 @@ fi
 #			Modules in Alphabetical Order, please keep them that way..
 #
 ######################################################################################################################
-%{prefix}/mod/mod_abtraction.so*
-%{prefix}/mod/mod_amrwb.so*
-%{prefix}/mod/mod_avmd.so*
-%{prefix}/mod/mod_blacklist.so*
-%{prefix}/mod/mod_bv.so*
-%{prefix}/mod/mod_callcenter.so*
 %{prefix}/mod/mod_cdr_csv.so*
-%{prefix}/mod/mod_cdr_sqlite.so*
-%{prefix}/mod/mod_celt.so*
-%{prefix}/mod/mod_cidlookup.so*
-%{prefix}/mod/mod_cluechoo.so*
-%{prefix}/mod/mod_codec2.so*
 %{prefix}/mod/mod_console.so*
 %{prefix}/mod/mod_commands.so*
-%{prefix}/mod/mod_conference.so*
-%{prefix}/mod/mod_curl.so*
-%{prefix}/mod/mod_db.so*
-%{prefix}/mod/mod_dialplan_asterisk.so* 
 %{prefix}/mod/mod_dialplan_directory.so* 
 %{prefix}/mod/mod_dialplan_xml.so* 
-%{prefix}/mod/mod_dingaling.so*
-%{prefix}/mod/mod_directory.so*
-%{prefix}/mod/mod_distributor.so*
 %{prefix}/mod/mod_dptools.so*
-%{prefix}/mod/mod_easyroute.so*
-%{prefix}/mod/mod_enum.so*
-%{prefix}/mod/mod_esf.so*
-%{prefix}/mod/mod_event_multicast.so* 
-%{prefix}/mod/mod_event_socket.so* 
-%{prefix}/mod/mod_expr.so*
-%{prefix}/mod/mod_fifo.so*
-%{prefix}/mod/mod_flite.so*
-%{prefix}/mod/mod_fsv.so*
-%{prefix}/mod/mod_hash.so*
-%{prefix}/mod/mod_http_cache.so*
-%{prefix}/mod/mod_h26x.so*
-%{prefix}/mod/mod_ilbc.so*
-%{prefix}/mod/mod_lcr.so*
-%{prefix}/mod/mod_limit.so*
-%{prefix}/mod/mod_local_stream.so*
 %{prefix}/mod/mod_logfile.so*
 %{prefix}/mod/mod_loopback.so*
-%{prefix}/mod/mod_memcache.so*
-%{prefix}/mod/mod_mp4v.so*
 %{prefix}/mod/mod_native_file.so*
-%{prefix}/mod/mod_nibblebill.so*
-%{prefix}/mod/mod_opus.so*
-%{prefix}/mod/mod_pocketsphinx.so*
-%{prefix}/mod/mod_portaudio.so*
-%{prefix}/mod/mod_portaudio_stream.so*
-%{prefix}/mod/mod_redis.so*
-%{prefix}/mod/mod_rss.so*
-%{prefix}/mod/mod_rtmp.so*
-%{prefix}/mod/mod_shout.so*
-%{prefix}/mod/mod_silk.so*
-%{prefix}/mod/mod_siren.so*
-%{prefix}/mod/mod_skinny.so*
-%{prefix}/mod/mod_sms.so*
 %{prefix}/mod/mod_sndfile.so*
-%{prefix}/mod/mod_snom.so*
 %{prefix}/mod/mod_sofia.so*
-%{prefix}/mod/mod_soundtouch.so*
 %{prefix}/mod/mod_spandsp.so*
-%{prefix}/mod/mod_speex.so*
-%{prefix}/mod/mod_spy.so*
-%{prefix}/mod/mod_stress.so*
 %{prefix}/mod/mod_syslog.so*
-%{prefix}/mod/mod_theora.so*
 %{prefix}/mod/mod_tone_stream.so*
-%{prefix}/mod/mod_unimrcp.so*
-%{prefix}/mod/mod_valet_parking.so*
-%{prefix}/mod/mod_vmd.so*
-%{prefix}/mod/mod_voicemail.so*
-%{prefix}/mod/mod_voicemail_ivr.so*
-%{prefix}/mod/mod_xml_cdr.so*
-%{prefix}/mod/mod_xml_curl.so* 
 %{prefix}/mod/mod_xml_rpc.so* 
 ######################################################################################################################
 #
@@ -1638,12 +1576,11 @@ fi
 %{prefix}/mod/*.la
 %{prefix}/include/*.h
 
-%files config-vanilla
+
 ######################################################################################################################
-#
 #						Vanilla Config Files
-#
 ######################################################################################################################
+%files config-vanilla
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/*.tpl
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/*.ttml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/*.xml
@@ -1712,58 +1649,291 @@ fi
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/autoload_configs/xml_rpc.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/autoload_configs/zeroconf.conf.xml
 ######################################################################################################################
-#
 #						Chatplans
-#
 ######################################################################################################################
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/chatplan/default.xml
 ######################################################################################################################
-#
 #						Dialplans
-#
 ######################################################################################################################
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/dialplan/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/dialplan/default/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/dialplan/public/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/dialplan/skinny-patterns/*.xml
 ######################################################################################################################
-#
 #						User Directories
-#
 ######################################################################################################################
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/directory/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/directory/default/*
 ######################################################################################################################
-#
 #							IVR Menues
-#
 ######################################################################################################################
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/ivr_menus/*.xml
 ######################################################################################################################
-#
 #							Sip Profiles
-#
 ######################################################################################################################
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/sip_profiles/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/sip_profiles/internal/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/sip_profiles/external/*.xml
 ######################################################################################################################
-#
 #				Other Protocol Profiles (skinny, jingle, mrcp)
-#
 ######################################################################################################################
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/skinny_profiles/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/jingle_profiles/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/mrcp_profiles/*.xml
 ######################################################################################################################
-#
 #						Grammar Files
-#
 ######################################################################################################################
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/grammar/default.dic
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/grammar/model/communicator/*
 
+### END OF config-vanilla
 
+######################################################################################################################
+#
+#						Application Packages
+#
+######################################################################################################################
+%files application-abstraction
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_abstraction.so*
+
+%files application-avmd
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_avmd.so*
+
+%files application-blacklist
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_blacklist.so*
+
+%files application-callcenter
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_callcenter.so*
+
+%files application-cidlookup
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_cidlookup.so*
+
+%files application-conference
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_conference.so*
+
+%files application-curl
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_curl.so*
+
+%files application-db
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_db.so*
+
+%files application-directory
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_directory.so*
+
+%files application-distributor
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_distributor.so*
+
+%files application-easyroute
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_easyroute.so*
+
+%files application-enum
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_enum.so*
+
+%files application-esf
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_esf.so*
+
+%files application-esl
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_esl.so*
+
+%files application-expr
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_expr.so*
+
+%files application-fifo
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_fifo.so*
+
+%files application-fsk
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_fsk.so*
+
+%files application-fsv
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_fsv.so*
+
+%files application-hash
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_hash.so*
+
+%files application-httapi
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_httapi.so*
+
+%files application-http_cache
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_http_cache.so*
+
+%files application-lcr
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_lcr.so*
+
+%files application-limit
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_limit.so*
+
+%files application-memcache
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_memcache.so*
+
+%files application-nibblebill
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_nibblebill.so*
+
+%files application-redis
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_redis.so*
+
+%files application-rss
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_rss.so*
+
+%files application-sms
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_sms.so*
+
+%files application-snapshot
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_snapshot.so*
+
+%files application-snom
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_snom.so*
+
+%files application-soundtouch
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_soundtouch.so*
+
+%files application-spy
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_spy.so*
+
+%files application-stress
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_stress.so*
+
+%files application-valet_parking
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_valet_parking.so*
+
+%files application-voicemail
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_voicemail.so*
+
+%files application-voicemail-ivr
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_voicemail_ivr.so*
+
+######################################################################################################################
+#
+#						ASR RRS Packages
+#
+######################################################################################################################
+%files asrtts-flite
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_flite.so*
+
+%files asrtts-pocketsphinx
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_pocketsphinx.so*
+
+%files asrtts-tts-commandline
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_tts_commandline.so*
+
+%files asrtts-unimrcp
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_unimrcp.so*
+
+######################################################################################################################
+#
+#						CODEC Packages
+#
+######################################################################################################################
+
+%files codec-passthru-amr
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_amr.so*
+
+%files codec-passthru-amrwb
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_amrwb.so*
+
+%files codec-bv
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_bv.so*
+
+%files codec-celt
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_celt.so*
+
+%files codec-codec2
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_codec2.so*
+
+
+%files codec-passthru-g723_1
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_g723_1.so*
+
+%files codec-passthru-g729
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_g729.so*
+
+%files codec-h26x
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_h26x.so*
+
+%files codec-ilbc
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_ilbc.so*
+
+%files codec-isac
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_isac.so*
+
+%files codec-mp4v
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_mp4v.so*
+
+%files codec-opus
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_opus.so*
+
+%if %{build_sng_tc}
+%files sangoma-codec
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_sangoma_codec.so*
+%endif
+
+%files codec-silk
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_silk.so*
+
+%files codec-siren
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_siren.so*
+
+%files codec-speex
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_speex.so*
+
+%files codec-theora
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_theora.so*
 
 
 ######################################################################################################################
@@ -1784,12 +1954,6 @@ fi
 %{prefix}/mod/ftmod_skel*.so*
 %{prefix}/mod/ftmod_[a-r,t-z]*.so*
 
-%if %{build_sng_tc}
-%files sangoma-codec
-%defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_sangoma_codec.so*
-%endif
-
 %if %{build_sng_ss7}
 %files freetdm-sng-ss7
 %defattr(-, freeswitch, daemon)
@@ -1802,26 +1966,6 @@ fi
 %{prefix}/mod/ftmod_sangoma_isdn.so*
 %endif
 
-######################################################################################################################
-#
-#						Passthru Codec Modules
-#
-######################################################################################################################
-%files codec-passthru-amrwb
-%defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_amrwb.so*
-
-%files codec-passthru-amr
-%defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_amr.so*
-
-%files codec-passthru-g723_1
-%defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_g723_1.so*
-
-%files codec-passthru-g729
-%defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_g729.so*
 
 ######################################################################################################################
 #
