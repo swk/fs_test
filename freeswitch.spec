@@ -202,369 +202,363 @@ FreeSWITCH development files
 ######################################################################################################################
 #				FreeSWITCH Application Modules
 ######################################################################################################################
-%package mod_abstraction
+%package application-abstraction
 Summary:	FreeSWITCH mod_abstraction
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_abstraction
+%description application-abstraction
 Provide an abstraction to FreeSWITCH API calls
 
-%package mod_avmd
+%package application-avmd
 Summary:	FreeSWITCH voicemail detector
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_avmd
+%description application-avmd
 Provide an voicemail beep detector for FreeSWITCH
 
-%package mod_blacklist
+%package application-blacklist
 Summary:	FreeSWITCH blacklist module
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_blacklist
+%description application-blacklist
 Provide black/white listing of various fields used for routing calls in 
 FreeSWITCH
 
-%package mod_callcenter
+%package application-callcenter
 Summary:	FreeSWITCH mod_callcenter Call Queuing Application
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_callcenter
+%description application-callcenter
 Provide Automated Call Distribution capabilities for FreeSWITCH
 
-%package mod_cidlookup
+%package application-cidlookup
 Summary:	FreeSWITCH mod_cidlookup 
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_cidlookup
+%description application-cidlookup
 Provide FreeSWITCH access to third party CallerID Name Databases via HTTP
 
-%package mod_conference
+%package application-conference
 Summary:	FreeSWITCH mod_conference
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_conference
+%description application-conference
 Provide FreeSWITCH Conference Bridge Services. 
 
-%package mod_curl
+%package application-curl
 Summary:	FreeSWITCH mod_curl
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_curl
+%description application-curl
 Provide FreeSWITCH dialplan access to CURL
 
-%package mod_db
+%package application-db
 Summary:	FreeSWITCH mod_db
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_db
+%description application-db
 mod_db implements an API and dialplan interface to a database backend for 
 FreeSWITCH.  The database can either be in sqlite or ODBC.  It also provides 
 support for group dialing and provides database backed limit interface. 
 
-%package mod_directory
+%package application-directory
 Summary:	FreeSWITCH mod_directory
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_directory
+%description application-directory
 Provides FreeSWITCH mod_directory, a dial by name directory application. 
 
-%package mod_distributor
+%package application-distributor
 Summary:	FreeSWITCH mod_distributor
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_distributor
+%description application-distributor
 Provides FreeSWITCH mod_distributor, a simple round-robbin style distribution 
 to call gateways.
 
-%package mod_easyroute
+%package application-easyroute
 Summary:	FreeSWITCH mod_easyroute
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_easyroute
+%description application-easyroute
 Provides FreeSWITCH mod_easyroute, a simple, easy to use DB Backed DID routing 
 Engine. Uses ODBC to connect to the DB of your choice.
 
-%package mod_enum
+%package application-enum
 Summary:	FreeSWITCH mod_enum
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_enum
+%description application-enum
 Provides FreeSWITCH mod_enum, a ENUM dialplan, with API and Dialplan extensions 
 supporting ENUM lookups.
 
-%package mod_esf
+%package application-esf
 Summary:	FreeSWITCH mod_esf
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_esf
+%description application-esf
 Provides FreeSWITCH mod_esf, Extra Sip Functionality such as Multicast Support
 
-%package mod_esl
+%package application-esl
 Summary:	FreeSWITCH mod_esl
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_esl
+%description application-esl
 Provides FreeSWITCH mod_esl, add api commands for remote ESL commands
 
-%package mod_expr
+%package application-expr
 Summary:	FreeSWITCH mod_expr
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_expr
+%description application-expr
 Provides FreeSWITCH mod_expr, implements Brian Allen Vanderburg's ExprEval 
 expression evaluation library for FreeSWITCH.
 
-%package mod_fifo
+%package application-fifo
 Summary:	FreeSWITCH mod_fifo
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_fifo
+%description application-fifo
 Provides FreeSWITCH mod_fifo, a parking-like app which allows you to make 
 custom call queues
 
-%package mod_fsk
+%package application-fsk
 Summary:	FreeSWITCH mod_fsk
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_fsk
+%description application-fsk
 Provides FreeSWITCH mod_fsk, a module to send and receive information via 
 Frequency-shift keying
 
-%package mod_fsv
+%package application-fsv
 Summary:	FreeSWITCH mod_fsv
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_fsv
+%description application-fsv
 Provides FreeSWITCH mod_fsk, implements functions to record and play back video
 
-%package mod_hash
+%package application-hash
 Summary:	FreeSWITCH mod_hash
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_hash
+%description application-hash
 Provides FreeSWITCH mod_hash, implements an API and application interface for 
 manipulating a hash table. It also provides a limit backend. 
 
-%package mod_httapi
+%package application-httapi
 Summary:	FreeSWITCH mod_httapi
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_httapi
+%description application-httapi
 Provides FreeSWITCH mod_httapi, provides an HTTP based Telephony API using a 
 standard FreeSWITCH application interface as well as a cached http file format 
 interface
 
-%package mod_http_cache
+%package application-http_cache
 Summary:	FreeSWITCH mod_http_cache
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_http_cache
+%description application-http-cache
 Provides FreeSWITCH mod_http_cache, allows one to make a HTTP GET request to 
 cache a document. The primary use case is to download and cache audio files 
 from a web server. 
 
-%package mod_lcr
+%package application-lcr
 Summary:	FreeSWITCH mod_lcr
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_lcr
+%description application-lcr
 Provides FreeSWITCH mod_lcr, provide basic Least Cost Routing Services
 
-%package mod_limit
+%package application-limit
 Summary:	FreeSWITCH mod_limit
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_limit
+%description application-limit
 Provides FreeSWITCH mod_limit, provide application to limit both concurrent and call per time period
 
-%package mod_memcache
+%package application-memcache
 Summary:	FreeSWITCH mod_memcache
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_memcache
+%description application-memcache
 Provides FreeSWITCH mod_memcache, implements an API interface to memcached which
 is a "high-performance, distributed memory object caching system, generic in 
 nature, but intended for use in speeding up dynamic web applications by 
 alleviating database load." 
 
-%package mod_nibblebill
+%package application-nibblebill
 Summary:	FreeSWITCH mod_nibblebill
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_nibblebill
+%description application-nibblebill
 Provides FreeSWITCH mod_nibblebill, provides a credit/debit module for 
 FreeSWITCH to allow real-time debiting of credit or cash from a database 
 while calls are in progress.
 
-%package mod_redis
+%package application-redis
 Summary:	FreeSWITCH mod_redis
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_redis
+%description application-redis
 Provides FreeSWITCH mod_redis, access to the redis key value pair db system from
 FreeSWITCH
 
-%package mod_rss
+%package application-rss
 Summary:	FreeSWITCH mod_rss
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_rss
+%description application-rss
 Provides FreeSWITCH mod_rss, edisrse and read an XML based RSS feed, then read
 the entries aloud via a TTS engine
 
-%package mod_sms
+%package application-sms
 Summary:	FreeSWITCH mod_sms
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_sms
+%description application-sms
 Provides FreeSWITCH mod_sms, provide a way to route messages in freeswitch, 
 potentially allowing one to build a powerful chatting system like in XMPP using 
 using SIP SIMPLE on SIP clients
 
-%package mod_snapshot
+%package application-snapshot
 Summary:	FreeSWITCH mod_snapshot
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_snapshot
+%description application-snapshot
 Provides FreeSWITCH mod_snapshot, allows recording a sliding window of audio 
 and taking snapshots to disk. 
 
-%package mod_snom
+%package application-snom
 Summary:	FreeSWITCH mod_snom
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_snom
+%description application-snom
 Provides FreeSWITCH mod_snom, an application for controlling the functionality 
 and appearance of the programmable softkeys on Snom phones
 
-%package mod_soundtouch
+%package application-soundtouch
 Summary:	FreeSWITCH mod_soundtouch
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_soundtouch
+%description application-soundtouch
 Provides FreeSWITCH mod_soundtouch, uses the soundtouch library, which can do
 pitch shifting and other audio effects, so you can pipe the audio of a call
 (or any other channel audio) through this module and achieve those effects. You
 can specifically adjust pitch, rate, and tempo.
 
-%package mod_spy
+%package application-spy
 Summary:	FreeSWITCH mod_spy
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_spy
+%description application-spy
 Provides FreeSWITCH mod_spy, implements userspy application which provides 
 persistent eavesdrop on all channels bridged to a certain user
 
-%package mod_stress
+%package application-stress
 Summary:	FreeSWITCH mod_stress
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_stress
+%description application-stress
 Provides FreeSWITCH mod_stress. mod_stress attempts to detect stress in a 
 person's voice and generates FreeSWITCH events based on that data. 
 
-%package mod_valet_parking
+%package application-valet_parking
 Summary:	FreeSWITCH mod_valet_parking
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_valet_parking
+%description application-valet_parking
 Provides FreeSWITCH mod_valet_parking. Provides 'Call Parking' in the switch
 as opposed to on the phone and allows for a number of options to handle call
 retrieval
 
-%package mod_voicemail
+%package application-voicemail
 Summary:	FreeSWITCH mod_voicemail
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_voicemail
+%description application-voicemail
 Provides FreeSWITCH mod_voicemail. Implements Voicemail Application 
 
-%package mod_voicemail_ivr
+%package application-voicemail-ivr
 Summary:	FreeSWITCH mod_voicemail_ivr
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_voicemail_ivr
+%description application-voicemail_ivr
 Provides FreeSWITCH mod_voicemail_ivr. Provides a custimizable audio navigation 
 system for backend voicemail systems
 
-##### ASR_TTS Modules %%%%%%
-%package mod_flite
+######################################################################################################################
+#				FreeSWITCH ASR TTS Modules
+######################################################################################################################
+
+%package asrtts-flite
 Summary:	FreeSWITCH mod_flite
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_flite
+%description asrtts-flite
 Provides FreeSWITCH mod_flite, a interface to the flite text to speech engine
 
-%package mod_pocketsphinx
+%package asrtts-pocketsphinx
 Summary:	FreeSWITCH mod_pocketsphinx
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_pocketsphinx
+%description asrtts-pocketsphinx
 Provides FreeSWITCH mod_pocketsphinx, a interface to the OpenSource 
 Pocketsphinx speech recognition engine
 
-%package mod_tts_commandline
+%package asrtts-tts-commandline
 Summary:	FreeSWITCH mod_tts_commandline
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_tts_commandline
+%description asrtts-tts-commandline
 Provides FreeSWITCH mod_tts_commandline, Run a command line and play the 
 output file.
 
-%package mod_unimrcp
+%package asrtts-unimrcp
 Summary:	FreeSWITCH mod_unimrcp
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description mod_tts_unimrcp
-Provides FreeSWITCH mod_unimrcp, allows communication with Media Resource 
-Control Protocol (MRCP) servers
-
-%package mod_unimrcp
-Summary:	FreeSWITCH mod_unimrcp
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
-
-%description mod_tts_unimrcp
+%description asrtts-unimrcp
 Provides FreeSWITCH mod_unimrcp, allows communication with Media Resource 
 Control Protocol (MRCP) servers
 
@@ -1149,13 +1143,13 @@ Provides XML-RPC interface for the FreeSWITCH Open Source telephone platform.
 #				FreeSWITCH basic config module
 ######################################################################################################################
 
-%package xml-rpc
-Summary:        Provides XML-RPC interface for the FreeSWITCH Open Source telephone platform.
+%package config-vanilla
+Summary:        Basic vanilla config set for the FreeSWITCH Open Source telephone platform.
 Group:          System/Libraries
 Requires:        %{name} = %{version}-%{release}
 
-%description xml-rpc
-Provides XML-RPC interface for the FreeSWITCH Open Source telephone platform.
+%description config-vanilla
+Basic vanilla config set for the FreeSWITCH Open Source telephone platform.
 
 ######################################################################################################################
 #
@@ -1523,9 +1517,131 @@ fi
 %ifos linux
 %config(noreplace) %attr(0644, freeswitch, daemon) /etc/monit.d/freeswitch.monitrc
 %endif
+
+
 ######################################################################################################################
 #
-#						Config Files
+#						Other Fíles
+#
+######################################################################################################################
+%config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/htdocs/*
+%ifos linux
+/etc/rc.d/init.d/freeswitch
+/etc/sysconfig/freeswitch
+%if 0%{?suse_version} > 100
+/usr/sbin/rcfreeswitch
+%endif
+%endif
+%ifos linux
+%dir %attr(0750, root, root) /etc/monit.d
+%endif
+######################################################################################################################
+#
+#						Binaries
+#
+######################################################################################################################
+%attr(0755, freeswitch, daemon) %{prefix}/bin/*
+%{prefix}/lib/libfreeswitch*.so*
+######################################################################################################################
+#
+#			Modules in Alphabetical Order, please keep them that way..
+#
+######################################################################################################################
+%{prefix}/mod/mod_abtraction.so*
+%{prefix}/mod/mod_amrwb.so*
+%{prefix}/mod/mod_avmd.so*
+%{prefix}/mod/mod_blacklist.so*
+%{prefix}/mod/mod_bv.so*
+%{prefix}/mod/mod_callcenter.so*
+%{prefix}/mod/mod_cdr_csv.so*
+%{prefix}/mod/mod_cdr_sqlite.so*
+%{prefix}/mod/mod_celt.so*
+%{prefix}/mod/mod_cidlookup.so*
+%{prefix}/mod/mod_cluechoo.so*
+%{prefix}/mod/mod_codec2.so*
+%{prefix}/mod/mod_console.so*
+%{prefix}/mod/mod_commands.so*
+%{prefix}/mod/mod_conference.so*
+%{prefix}/mod/mod_curl.so*
+%{prefix}/mod/mod_db.so*
+%{prefix}/mod/mod_dialplan_asterisk.so* 
+%{prefix}/mod/mod_dialplan_directory.so* 
+%{prefix}/mod/mod_dialplan_xml.so* 
+%{prefix}/mod/mod_dingaling.so*
+%{prefix}/mod/mod_directory.so*
+%{prefix}/mod/mod_distributor.so*
+%{prefix}/mod/mod_dptools.so*
+%{prefix}/mod/mod_easyroute.so*
+%{prefix}/mod/mod_enum.so*
+%{prefix}/mod/mod_esf.so*
+%{prefix}/mod/mod_event_multicast.so* 
+%{prefix}/mod/mod_event_socket.so* 
+%{prefix}/mod/mod_expr.so*
+%{prefix}/mod/mod_fifo.so*
+%{prefix}/mod/mod_flite.so*
+%{prefix}/mod/mod_fsv.so*
+%{prefix}/mod/mod_hash.so*
+%{prefix}/mod/mod_http_cache.so*
+%{prefix}/mod/mod_h26x.so*
+%{prefix}/mod/mod_ilbc.so*
+%{prefix}/mod/mod_lcr.so*
+%{prefix}/mod/mod_limit.so*
+%{prefix}/mod/mod_local_stream.so*
+%{prefix}/mod/mod_logfile.so*
+%{prefix}/mod/mod_loopback.so*
+%{prefix}/mod/mod_memcache.so*
+%{prefix}/mod/mod_mp4v.so*
+%{prefix}/mod/mod_native_file.so*
+%{prefix}/mod/mod_nibblebill.so*
+%{prefix}/mod/mod_opus.so*
+%{prefix}/mod/mod_pocketsphinx.so*
+%{prefix}/mod/mod_portaudio.so*
+%{prefix}/mod/mod_portaudio_stream.so*
+%{prefix}/mod/mod_redis.so*
+%{prefix}/mod/mod_rss.so*
+%{prefix}/mod/mod_rtmp.so*
+%{prefix}/mod/mod_shout.so*
+%{prefix}/mod/mod_silk.so*
+%{prefix}/mod/mod_siren.so*
+%{prefix}/mod/mod_skinny.so*
+%{prefix}/mod/mod_sms.so*
+%{prefix}/mod/mod_sndfile.so*
+%{prefix}/mod/mod_snom.so*
+%{prefix}/mod/mod_sofia.so*
+%{prefix}/mod/mod_soundtouch.so*
+%{prefix}/mod/mod_spandsp.so*
+%{prefix}/mod/mod_speex.so*
+%{prefix}/mod/mod_spy.so*
+%{prefix}/mod/mod_stress.so*
+%{prefix}/mod/mod_syslog.so*
+%{prefix}/mod/mod_theora.so*
+%{prefix}/mod/mod_tone_stream.so*
+%{prefix}/mod/mod_unimrcp.so*
+%{prefix}/mod/mod_valet_parking.so*
+%{prefix}/mod/mod_vmd.so*
+%{prefix}/mod/mod_voicemail.so*
+%{prefix}/mod/mod_voicemail_ivr.so*
+%{prefix}/mod/mod_xml_cdr.so*
+%{prefix}/mod/mod_xml_curl.so* 
+%{prefix}/mod/mod_xml_rpc.so* 
+######################################################################################################################
+#
+#						Package for the developer
+#
+######################################################################################################################
+%files devel
+%defattr(-, freeswitch, daemon)
+%{prefix}/lib/*.a
+%{prefix}/lib/*.la
+%{prefix}/lib/pkgconfig/*
+%{prefix}/mod/*.a
+%{prefix}/mod/*.la
+%{prefix}/include/*.h
+
+%files config-vanilla
+######################################################################################################################
+#
+#						Vanilla Config Files
 #
 ######################################################################################################################
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/*.tpl
@@ -1646,124 +1762,10 @@ fi
 ######################################################################################################################
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/grammar/default.dic
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/grammar/model/communicator/*
-######################################################################################################################
-#
-#						Other Fíles
-#
-######################################################################################################################
-%config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/htdocs/*
-%ifos linux
-/etc/rc.d/init.d/freeswitch
-/etc/sysconfig/freeswitch
-%if 0%{?suse_version} > 100
-/usr/sbin/rcfreeswitch
-%endif
-%endif
-%ifos linux
-%dir %attr(0750, root, root) /etc/monit.d
-%endif
-######################################################################################################################
-#
-#						Binaries
-#
-######################################################################################################################
-%attr(0755, freeswitch, daemon) %{prefix}/bin/*
-%{prefix}/lib/libfreeswitch*.so*
-######################################################################################################################
-#
-#			Modules in Alphabetical Order, please keep them that way..
-#
-######################################################################################################################
-%{prefix}/mod/mod_abtraction.so*
-%{prefix}/mod/mod_amrwb.so*
-%{prefix}/mod/mod_avmd.so*
-%{prefix}/mod/mod_blacklist.so*
-%{prefix}/mod/mod_bv.so*
-%{prefix}/mod/mod_callcenter.so*
-%{prefix}/mod/mod_cdr_csv.so*
-%{prefix}/mod/mod_cdr_sqlite.so*
-%{prefix}/mod/mod_celt.so*
-%{prefix}/mod/mod_cidlookup.so*
-%{prefix}/mod/mod_cluechoo.so*
-%{prefix}/mod/mod_codec2.so*
-%{prefix}/mod/mod_console.so*
-%{prefix}/mod/mod_commands.so*
-%{prefix}/mod/mod_conference.so*
-%{prefix}/mod/mod_curl.so*
-%{prefix}/mod/mod_db.so*
-%{prefix}/mod/mod_dialplan_asterisk.so* 
-%{prefix}/mod/mod_dialplan_directory.so* 
-%{prefix}/mod/mod_dialplan_xml.so* 
-%{prefix}/mod/mod_dingaling.so*
-%{prefix}/mod/mod_directory.so*
-%{prefix}/mod/mod_distributor.so*
-%{prefix}/mod/mod_dptools.so*
-%{prefix}/mod/mod_easyroute.so*
-%{prefix}/mod/mod_enum.so*
-%{prefix}/mod/mod_esf.so*
-%{prefix}/mod/mod_event_multicast.so* 
-%{prefix}/mod/mod_event_socket.so* 
-%{prefix}/mod/mod_expr.so*
-%{prefix}/mod/mod_fifo.so*
-%{prefix}/mod/mod_flite.so*
-%{prefix}/mod/mod_fsv.so*
-%{prefix}/mod/mod_hash.so*
-%{prefix}/mod/mod_http_cache.so*
-%{prefix}/mod/mod_h26x.so*
-%{prefix}/mod/mod_ilbc.so*
-%{prefix}/mod/mod_lcr.so*
-%{prefix}/mod/mod_limit.so*
-%{prefix}/mod/mod_local_stream.so*
-%{prefix}/mod/mod_logfile.so*
-%{prefix}/mod/mod_loopback.so*
-%{prefix}/mod/mod_memcache.so*
-%{prefix}/mod/mod_mp4v.so*
-%{prefix}/mod/mod_native_file.so*
-%{prefix}/mod/mod_nibblebill.so*
-%{prefix}/mod/mod_opus.so*
-%{prefix}/mod/mod_pocketsphinx.so*
-%{prefix}/mod/mod_portaudio.so*
-%{prefix}/mod/mod_portaudio_stream.so*
-%{prefix}/mod/mod_redis.so*
-%{prefix}/mod/mod_rss.so*
-%{prefix}/mod/mod_rtmp.so*
-%{prefix}/mod/mod_shout.so*
-%{prefix}/mod/mod_silk.so*
-%{prefix}/mod/mod_siren.so*
-%{prefix}/mod/mod_skinny.so*
-%{prefix}/mod/mod_sms.so*
-%{prefix}/mod/mod_sndfile.so*
-%{prefix}/mod/mod_snom.so*
-%{prefix}/mod/mod_sofia.so*
-%{prefix}/mod/mod_soundtouch.so*
-%{prefix}/mod/mod_spandsp.so*
-%{prefix}/mod/mod_speex.so*
-%{prefix}/mod/mod_spy.so*
-%{prefix}/mod/mod_stress.so*
-%{prefix}/mod/mod_syslog.so*
-%{prefix}/mod/mod_theora.so*
-%{prefix}/mod/mod_tone_stream.so*
-%{prefix}/mod/mod_unimrcp.so*
-%{prefix}/mod/mod_valet_parking.so*
-%{prefix}/mod/mod_vmd.so*
-%{prefix}/mod/mod_voicemail.so*
-%{prefix}/mod/mod_voicemail_ivr.so*
-%{prefix}/mod/mod_xml_cdr.so*
-%{prefix}/mod/mod_xml_curl.so* 
-%{prefix}/mod/mod_xml_rpc.so* 
-######################################################################################################################
-#
-#						Package for the developer
-#
-######################################################################################################################
-%files devel
-%defattr(-, freeswitch, daemon)
-%{prefix}/lib/*.a
-%{prefix}/lib/*.la
-%{prefix}/lib/pkgconfig/*
-%{prefix}/mod/*.a
-%{prefix}/mod/*.la
-%{prefix}/include/*.h
+
+
+
+
 ######################################################################################################################
 #
 #						FreeTDM Module for TDM Interaction
