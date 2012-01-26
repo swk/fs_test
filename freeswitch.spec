@@ -757,7 +757,7 @@ Summary:        H.323 enpoint support for FreeSWITCH open source telephony platf
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description endpoint-gsmopen
+%description endpoint-h323
 H.323 enpoint support for FreeSWITCH open source telephony platform
 
 %package endpoint-khomp
@@ -783,7 +783,7 @@ Summary:        RTPM Endpoint support for FreeSWITCH open source telephony platf
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description endpoint-dingaling
+%description endpoint-rtmp
 RTMP Endpoint support for FreeSWITCH open source telephony platform. Allows FreeSWITCH
 to be used from a RTMP client. See http://wiki.freeswitch.org/wiki/Mod_rtmp#Flex_Client
 for the OpenSouce FreeSWITCH backed Client.
@@ -860,14 +860,6 @@ bridged, originated, answered, etc. as in all other endpoints, e.g. Sofia-SIP).
 #				FreeSWITCH Event Handler Modules
 ######################################################################################################################
 
-%package cdr-csv
-Summary:	CSV CDR Logger for the FreeSWITCH open source telephony platform
-Group:		System/Libraries
-Requires:	 %{name} = %{version}-%{release}
-
-%description cdr-csv
-CSV CDR Logger for FreeSWITCH
-
 #%package eventhandler-cdr-mongodb
 #Summary:	MongoDB CDR Logger for the FreeSWITCH open source telephony platform
 #Group:		System/Libraries
@@ -876,44 +868,44 @@ CSV CDR Logger for FreeSWITCH
 #%description eventhandler-cdr-mongodb
 #MongoDB CDR Logger for FreeSWITCH
 
-%package cdr-mongodb
+%package event-cdr-mongodb
 Summary:	MongoDB CDR Logger for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	 %{name} = %{version}-%{release}
 
-%description cdr-mongodb
+%description event-cdr-mongodb
 MongoDB CDR Logger for FreeSWITCH
 
-%package cdr-pg-csv
+%package event-cdr-pg-csv
 Summary:	PostgreSQL CDR Logger for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	 %{name} = %{version}-%{release}
 
-%description cdr-pg-csv
+%description event-cdr-pg-csv
 PostgreSQL CDR Logger for FreeSWITCH.
 
-%package cdr-sqlite
+%package event-cdr-sqlite
 Summary:	SQLite CDR Logger for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	 %{name} = %{version}-%{release}
 
-%description cdr-sqlite
+%description event-cdr-sqlite
 SQLite CDR Logger for FreeSWITCH.
 
-%package cdr-sqlite
+%package event-cdr-sqlite
 Summary:	SQLite CDR Logger for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	 %{name} = %{version}-%{release}
 
-%description cdr-sqlite
+%description event-cdr-sqlite
 SQLite CDR Logger for FreeSWITCH.
 
-%package cdr-erlang-event
+%package event-cdr-erlang-event
 Summary:	Erlang Event Module for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	 %{name} = %{version}-%{release}
 
-%description cdr-erlang-event
+%description event-cdr-erlang-event
 Erlang Event Module for FreeSWITCH.
 
 %package event-multicast
@@ -932,22 +924,22 @@ Requires:	 %{name} = %{version}-%{release}
 %description event-zmq
 ZeroMQ Event System for FreeSWITCH.
 
-%package json-cdr
+%package event-json-cdr
 Summary:	JSON CDR Logger for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
 
-%description json-cdr
+%description event-json-cdr
 JSON CDR Logger for FreeSWITCH.
 
-%package snmp
+%package event-snmp
 Summary:	SNMP stats reporter for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	net-snmp
 BuildRequires:	net-snmp-devel
 
-%description snmp
+%description event-snmp
 SNMP stats reporter for the FreeSWITCH open source telephony platform
 
 ######################################################################################################################
@@ -1935,6 +1927,53 @@ fi
 %defattr(-,freeswitch,daemon)
 %{prefix}/mod/mod_theora.so*
 
+######################################################################################################################
+#
+#						FreeSWITCH Directory Modules
+#
+######################################################################################################################
+
+%files directory-ldap
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_theora.so*
+
+######################################################################################################################
+#
+#						FreeSWITCH endpoint Modules
+#
+######################################################################################################################
+
+%files endpoint-dingaling
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_dingaling.so*
+
+%files endpoint-gsmopen
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_gsmopen.so*
+
+%files endpoint-h323
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_h323.so*
+
+%files endpoint-khomp
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_khomp.so*
+
+%files endpoint-portaudio
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_portaudio.so*
+
+%files endpoint-rtmp
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_rtmp.so*
+
+%files endpoint-skinny
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_skinny.so*
+
+%files endpoint-skypopen
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_skypopen.so*
 
 ######################################################################################################################
 #
@@ -2004,9 +2043,6 @@ fi
 %dir %attr(0750, freeswitch, daemon) %{prefix}/conf/autoload_configs
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/autoload_configs/python.conf.xml
 
-%files skypopen
-%defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_skypopen.so*
 ######################################################################################################################
 #
 #						Language Modules
