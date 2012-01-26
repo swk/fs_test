@@ -1113,7 +1113,49 @@ Group:          System/Libraries
 Requires:        %{name} = %{version}-%{release}
 
 %description timer-timerfd
-Provides Linux Timerfs based timer for the FreeSWITCH Open Source telephone platform.
+Provides Linux Timerfs based timer for the FreeSWITCH Open Source telephone 
+platform.
+
+######################################################################################################################
+#				FreeSWITCH XML INT Modules
+######################################################################################################################
+
+%package xml-cdr
+Summary:        Provides XML CDR interface for the FreeSWITCH Open Source telephone platform.
+Group:          System/Libraries
+Requires:        %{name} = %{version}-%{release}
+
+%description xml-cdr
+Provides XML CDR interface for the FreeSWITCH Open Source telephone platform.
+
+%package xml-curl
+Summary:        Provides XML Curl interface for the FreeSWITCH Open Source telephone platform.
+Group:          System/Libraries
+Requires:        %{name} = %{version}-%{release}
+
+%description xml-curl
+Provides XML Curl interface for the FreeSWITCH Open Source telephone platform.
+Pull dynamic XML configs for FreeSWITCH over HTTP.
+
+%package xml-rpc
+Summary:        Provides XML-RPC interface for the FreeSWITCH Open Source telephone platform.
+Group:          System/Libraries
+Requires:        %{name} = %{version}-%{release}
+
+%description xml-rpc
+Provides XML-RPC interface for the FreeSWITCH Open Source telephone platform.
+
+######################################################################################################################
+#				FreeSWITCH basic config module
+######################################################################################################################
+
+%package xml-rpc
+Summary:        Provides XML-RPC interface for the FreeSWITCH Open Source telephone platform.
+Group:          System/Libraries
+Requires:        %{name} = %{version}-%{release}
+
+%description xml-rpc
+Provides XML-RPC interface for the FreeSWITCH Open Source telephone platform.
 
 ######################################################################################################################
 #
@@ -1163,72 +1205,81 @@ export QA_RPATHS=$[ 0x0001|0x0002 ]
 #
 ######################################################################################################################
 APPLICATION_MODULES_AC="applications/mod_abstraction applications/mod_avmd applications/mod_blacklist \
-					    applications/mod_callcenter  applications/mod_cidlookup applications/mod_cluechoo \
-						applications/mod_commands applications/mod_conference applications/mod_curl"
+			applications/mod_callcenter  applications/mod_cidlookup \
+			applications/mod_commands applications/mod_conference applications/mod_curl"
 APPLICATION_MODULES_DE="applications/mod_db applications/mod_directory applications/mod_distributor \
-				        applications/mod_dptools applications/mod_easyroute applications/mod_enum applications/mod_esf \
-				        applications/mod_expr"
-APPLICATION_MODULES_FR="applications/mod_fifo applications/mod_fsv applications/mod_hash applications/mod_lcr \
-						applications/mod_limit applications/mod_memcache applications/mod_http_cache \
-						applications/mod_nibblebill applications/mod_redis applications/mod_rss" 
-APPLICATION_MODULES_SZ="applications/mod_sms applications/mod_snom applications/mod_soundtouch \
- 					    applications/mod_spandsp applications/mod_spy applications/mod_stress \
-						applications/mod_valet_parking applications/mod_vmd applications/mod_voicemail \
-						applications/mod_voicemail_ivr"
+			applications/mod_dptools applications/mod_easyroute applications/mod_enum applications/mod_esf \
+			applications/mod_expr"
+APPLICATION_MODULES_FR="applications/mod_fifo applications/fsk applications/mod_fsv applications/mod_hash applications/mod_httapi \
+			applications/mod_http_cache applications/mod_lcr applications/mod_limit applications/mod_memcache \
+			applications/mod_nibblebill applications/mod_redis applications/mod_rss" 
+APPLICATION_MODULES_SZ="applications/mod_sms applications/mod_snapshot applications/mod_snom applications/mod_soundtouch \
+			applications/mod_spandsp applications/mod_spy applications/mod_stress \
+			applications/mod_valet_parking applications/mod_voicemail \
+			applications/mod_voicemail_ivr"
 
-APPLICATIONS_MODULES="$APPLICATION_MODULES_AC $APPLICATION_MODULES_DE prefix$APPLICATION_MODULES_FR $APPLICATION_MODULES_SZ"
+APPLICATIONS_MODULES="$APPLICATION_MODULES_AC $APPLICATION_MODULES_DE $APPLICATION_MODULES_FR $APPLICATION_MODULES_SZ"
+
 ######################################################################################################################
 #
 #				Automatic Speech Recognition and Text To Speech Modules
 #
 ######################################################################################################################
-ASR_TTS_MODULES="asr_tts/mod_pocketsphinx asr_tts/mod_flite asr_tts/mod_unimrcp"
+ASR_TTS_MODULES="asr_tts/mod_flite asr_tts/mod_pocketsphinx asr_tts/mod_tts_commandline asr_tts/mod_unimrcp"
+
 ######################################################################################################################
 #
 #						Codecs
 #
 ######################################################################################################################
-CODECS_MODULES="codecs/mod_bv codecs/mod_h26x codecs/mod_speex codecs/mod_celt codecs/mod_codec2 codecs/mod_ilbc \
-		        codecs/mod_mp4v codecs/mod_opus codecs/mod_silk codecs/mod_siren codecs/mod_theora "
+CODECS_MODULES="codecs/mod_amr codecs/mod_amrwb codecs/mod_bv codecs/mod_celt codecs/mod_codec2 codecs/mod_g723_1 \
+		codecs/mod_g729 codecs/mod_h26x codecs/mod_ilbc codecs/mod_mp4v codecs/mod_opus codecs/mod_silk \
+		codecs/mod_siren codecs/mod_speex codecs/mod_theora "
 #
 %if %{build_sng_tc}
 CODECS_MODULES+="codecs/mod_sangoma_codec"
 %endif
+
 ######################################################################################################################
 #
 #					Dialplan Modules
 #
 ######################################################################################################################
 DIALPLANS_MODULES="dialplans/mod_dialplan_asterisk dialplans/mod_dialplan_directory dialplans/mod_dialplan_xml"
+
 ######################################################################################################################
 #
 #					Directory Modules
 #
 ######################################################################################################################
 DIRECTORIES_MODULES=""
+
 ######################################################################################################################
 #
 #						Endpoints
 #
 ######################################################################################################################
-ENDPOINTS_MODULES="endpoints/mod_dingaling endpoints/mod_loopback ../../libs/freetdm/mod_freetdm \
-			       endpoints/mod_portaudio endpoints/mod_sofia endpoints/mod_skinny endpoints/mod_skypopen \
-				   endpoints/mod_rtmp"
+ENDPOINTS_MODULES="endpoints/mod_dingaling ../../libs/freetdm/mod_freetdm endpoints/mod_gsmopen endpoints/mod_h323 \
+			endpoints/mod_khomp endpoints/mod_loopback endpoints/mod_portaudio endpoints/mod_rtmp \
+			endpoints/mod_skinny endpoints/mod_skypopen endpoints/mod_sofia"
  
 ######################################################################################################################
 #
 #						Event Handlers
 #
 ######################################################################################################################
-EVENT_HANDLERS_MODULES="event_handlers/mod_cdr_csv event_handlers/mod_cdr_sqlite event_handlers/mod_event_socket \
-				        event_handlers/mod_event_multicast"
+EVENT_HANDLERS_MODULES="event_handlers/mod_cdr_csv event_handlers/mod_cdr_pg_csv event_handlers/mod_cdr_sqlite \
+			event_handlers/mod_erlang_event event_handlers/mod_event_multicast \
+			event_handlers/mod_event_socket event_handlers/mod_event_zmq event_handlers/mod_json_cdr \
+			event_handlers/mod_snmp"
+
 ######################################################################################################################
 #
 #					File and Audio Format Handlers
 #
 ######################################################################################################################
 FORMATS_MODULES="formats/mod_local_stream formats/mod_native_file formats/mod_portaudio_stream \
-                 formats/mod_shout formats/mod_sndfile formats/mod_tone_stream"
+                 formats/mod_shell_stream formats/mod_shout formats/mod_sndfile formats/mod_tone_stream"
 
 ######################################################################################################################
 #
@@ -1236,42 +1287,41 @@ FORMATS_MODULES="formats/mod_local_stream formats/mod_native_file formats/mod_po
 #
 ######################################################################################################################
 LANGUAGES_MODULES="languages/mod_lua languages/mod_perl languages/mod_python languages/mod_spidermonkey"
+
 ######################################################################################################################
 #
 #						Logging Modules
 #
 ######################################################################################################################
 LOGGERS_MODULES="loggers/mod_console loggers/mod_logfile loggers/mod_syslog"
-######################################################################################################################
-#
-#						Passthru Codecs
-#
-######################################################################################################################
-PASSTHRU_CODEC_MODULES="codecs/mod_amr codecs/mod_amrwb codecs/mod_g723_1 codecs/mod_g729"
+
 ######################################################################################################################
 #
 #						Phrase engine language modules
 #
 ######################################################################################################################
 SAY_MODULES="say/mod_say_de say/mod_say_en say/mod_say_fr say/mod_say_he say/mod_say_ru"
+
 ######################################################################################################################
 #
 #							Timers
 #
 ######################################################################################################################
-TIMERS_MODULES=
+TIMERS_MODULES="timers/mod_posix_timer timers/mod_timerfd"
+
 ######################################################################################################################
 #
 #						XML Modules
 #
 ######################################################################################################################
 XML_INT_MODULES="xml_int/mod_xml_cdr xml_int/mod_xml_curl xml_int/mod_xml_rpc"
+
 ######################################################################################################################
 #
 #				Create one environment variable out of all the module defs
 #
 ######################################################################################################################
-MYMODULES="$PASSTHRU_CODEC_MODULES $APPLICATIONS_MODULES $CODECS_MODULES $DIALPLANS_MODULES $DIRECTORIES_MODULES \
+MYMODULES="$APPLICATIONS_MODULES $CODECS_MODULES $DIALPLANS_MODULES $DIRECTORIES_MODULES \
 $ENDPOINTS_MODULES $ASR_TTS_MODULES $EVENT_HANDLERS_MODULES $FORMATS_MODULES $LANGUAGES_MODULES $LOGGERS_MODULES \
 $SAY_MODULES $TIMERS_MODULES $XML_INT_MODULES"
 
@@ -1298,7 +1348,7 @@ export ACLOCAL_FLAGS="-I /usr/share/aclocal"
 
 if test ! -f Makefile.in 
 then 
-   ./bootstrap.sh
+   ./bootstrap.sh -j
 fi
 
 
@@ -1310,7 +1360,7 @@ fi
 		--libdir=%{prefix}/lib \
 		--enable-core-libedit-support \
 		--enable-core-odbc-support \
-                --without-libcurl \
+                # --without-libcurl \
                 --with-openssl \
 		%{?configure_options}
 
