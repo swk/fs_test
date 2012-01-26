@@ -860,14 +860,6 @@ bridged, originated, answered, etc. as in all other endpoints, e.g. Sofia-SIP).
 #				FreeSWITCH Event Handler Modules
 ######################################################################################################################
 
-#%package eventhandler-cdr-mongodb
-#Summary:	MongoDB CDR Logger for the FreeSWITCH open source telephony platform
-#Group:		System/Libraries
-#Requires:	 %{name} = %{version}-%{release}
-#
-#%description eventhandler-cdr-mongodb
-#MongoDB CDR Logger for FreeSWITCH
-
 %package event-cdr-mongodb
 Summary:	MongoDB CDR Logger for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
@@ -892,20 +884,12 @@ Requires:	 %{name} = %{version}-%{release}
 %description event-cdr-sqlite
 SQLite CDR Logger for FreeSWITCH.
 
-%package event-cdr-sqlite
-Summary:	SQLite CDR Logger for the FreeSWITCH open source telephony platform
-Group:		System/Libraries
-Requires:	 %{name} = %{version}-%{release}
-
-%description event-cdr-sqlite
-SQLite CDR Logger for FreeSWITCH.
-
-%package event-cdr-erlang-event
+%package event-erlang-event
 Summary:	Erlang Event Module for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	 %{name} = %{version}-%{release}
 
-%description event-cdr-erlang-event
+%description event-erlang-event
 Erlang Event Module for FreeSWITCH.
 
 %package event-multicast
@@ -946,61 +930,61 @@ SNMP stats reporter for the FreeSWITCH open source telephony platform
 #				FreeSWITCH Media Format Modules
 ######################################################################################################################
 
-%package local-stream
+%package format-local-stream
 Summary:	Local File Streamer for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
 
-%description local-stream
+%description format-local-stream
 Local File Streamer for FreeSWITCH. It streams files from a directory and 
 multiple channels connected to the same stream will hear the same (looped) 
 file playback .. similar to a shoutcast stream. Useful for Music-on-hold type 
 scenarios. 
 
-%package native-file
+%package format-native-file
 Summary:	Native Media File support for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
 
-%description native-file
+%description format-native-file
 The native file module is designed to make it easy to play sound files where no
 transcoding is necessary. The default FreeSWITCH sound files are in wav format.
 Generally, these require transcoding when being played to callers. However, if
 a native format sound file is available then FreeSWITCH can use it. 
 
-%package portaudio-stream
+%package format-portaudio-stream
 Summary:	PortAudio Media Steam support for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
 
-%description portaudio-stream
+%description format-portaudio-stream
 Portaudio Streaming interface Audio for FreeSWITCH
 
-%package shell-stream
+%package format-shell-stream
 Summary:	Implements Media Steaming from arbitrary shell commands for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
 
-%description shell-stream
+%description format-shell-stream
 Mod shell stream is a FreeSWITCH module to allow you to stream audio from an 
 arbitrary shell command. You could use it to read audio from a database, from 
 a soundcard, etc. 
 
-%package mod-shout
+%package format-mod-shout
 Summary:	Implements Media Steaming from arbitrary shell commands for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
 
-%description mod-shout
+%description format-mod-shout
 Mod Shout is a FreeSWITCH module to allow you to stream audio from MP3s or a i
 shoutcast stream.
 
-%package tone-stream
+%package format-tone-stream
 Summary:	Implements TGML Tone Generation for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
 
-%description tone-stream
+%description format-tone-stream
 Implements TGML Tone Generation for the FreeSWITCH open source telephony platform
 
 ######################################################################################################################
@@ -2004,6 +1988,51 @@ fi
 %defattr(-, freeswitch, daemon)
 %{prefix}/mod/ftmod_sangoma_isdn.so*
 %endif
+
+######################################################################################################################
+#
+#					Event Modules
+#
+######################################################################################################################
+
+%files event-cdr-mongodb
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_cdr_mongodb.so*
+
+%files event-cdr-pg-csv
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_cdr_pg_csv.so*
+
+%files event-cdr-sqlite
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_cdr_sqlite.so*
+
+%files event-erlang-event
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_erlang-event.so*
+
+%files event-multicast
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_event_multicast.so*
+
+%files event-zmq
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_xmq.so*
+
+%files event-json-cdr
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_json_cdr.so*
+
+%files event-snmp
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_snmp.so*
+
+######################################################################################################################
+#
+#					Event Modules
+#
+######################################################################################################################
+
 
 
 ######################################################################################################################
