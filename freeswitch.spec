@@ -572,134 +572,134 @@ Control Protocol (MRCP) servers
 #				FreeSWITCH Codec Modules
 ######################################################################################################################
 
-%package freeswitch-codec-passthru-amr
+%package codec-passthru-amr
 Summary:        Pass-through AMR Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
-Conflicts:	freeswitch-codec-amr
+Conflicts:	codec-amr
 
-%description freeswitch-codec-passthru-amr
+%description codec-passthru-amr
 Pass-through AMR Codec support for FreeSWITCH open source telephony platform
 
-%package freeswitch-codec-passthru-amrwb
+%package codec-passthru-amrwb
 Summary:        Pass-through AMR WideBand Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
-Conflicts:      freeswitch-codec-amrwb
+Conflicts:      codec-amrwb
 
-%description freeswitch-codec-passthru-amrwb
+%description codec-passthru-amrwb
 Pass-through AMR WideBand Codec support for FreeSWITCH open source telephony platform
 
-%package freeswitch-codec-bv
+%package codec-bv
 Summary:        BroadVoice16 and BroadVoice32 WideBand Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-codec-bv
+%description codec-bv
 BroadVoice16 and BroadVoice32 WideBand Codec support for FreeSWITCH open source telephony platform
 
-%package freeswitch-codec-celt
+%package codec-celt
 Summary:        CELT ultra low delay Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-codec-celt
+%description codec-celt
 CELT ultra low delay Codec support for FreeSWITCH open source telephony platform
 
-%package freeswitch-codec-codec2
+%package codec-codec2
 Summary:        Codec2 Narrow Band Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-codec-codec2
+%description codec-codec2
 CODEC2 narrow band codec support for FreeSWITCH open source telephony platform.
 CODEC2 was created by the developers of Speex.
 
-%package freeswitch-codec-passthru-g723_1
+%package codec-passthru-g723_1
 Summary:        Pass-through g723.1 Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
-Conflicts:	freeswitch-codec-g723_1
+Conflicts:	codec-g723_1
 
-%description freeswitch-codec-passthru-g723_1
+%description codec-passthru-g723_1
 Pass-through g723.1 Codec support for FreeSWITCH open source telephony platform
 
-%package freeswitch-codec-passthru-g729
+%package codec-passthru-g729
 Summary:        Pass-through g729 Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
-Conflicts:	freeswitch-codec-com-g729
+Conflicts:	codec-com-g729
 
-%description freeswitch-codec-passthru-g729
+%description codec-passthru-g729
 Pass-through g729 Codec support for FreeSWITCH open source telephony platform
 
-%package freeswitch-codec-h26x
+%package codec-h26x
 Summary:        H.263/H.264 Video Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-codec-h26x
+%description codec-h26x
 H.263/H.264 Video Codec support for FreeSWITCH open source telephony platform
 
-%package freeswitch-codec-ilbc
+%package codec-ilbc
 Summary:        iLCB Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-codec-ilbc
+%description codec-ilbc
 iLBC Codec support for FreeSWITCH open source telephony platform
 
-%package freeswitch-codec-isac
+%package codec-isac
 Summary:        iSAC Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-codec-isac
+%description codec-isac
 iSAC Codec support for FreeSWITCH open source telephony platform
 
-%package freeswitch-codec-mp4v
+%package codec-mp4v
 Summary:        MP4V Video Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-codec-mp4v
+%description codec-mp4v
 MP4V Video Codec support for FreeSWITCH open source telephony platform
 
-%package freeswitch-codec-opus
+%package codec-opus
 Summary:        Opus Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-codec-opus
+%description codec-opus
 OPUS Codec support for FreeSWITCH open source telephony platform
 
 %if %{build_sng_tc}
-%package freeswitch-sangoma-codec
+%package sangoma-codec
 Summary:	Sangoma D100 and D500 Codec Card Support
 Group:		System/Libraries
 Requires:        %{name} = %{version}-%{release}
 Requires: sng-tc-linux
 BuildRequires: sng-tc-linux
 
-%description freeswitch-sangoma-codec
+%description sangoma-codec
 Sangoma D100 and D500 Codec Card Support
 
 %endif
 
-%package freeswitch-codec-silk
+%package codec-silk
 Summary:        Silk Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-codec-silk
+%description codec-silk
 Silk Codec (from Skype) support for FreeSWITCH open source telephony platform
 
-%package freeswitch-codec-siren
+%package codec-siren
 Summary:        Siren Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-codec-siren
+%description codec-siren
 Siren Codec support for FreeSWITCH open source telephony platform. Using 
 mod_siren in a commercial product will require you to acquire a patent license
 directly from Polycom(R) for your company. 
@@ -707,99 +707,99 @@ see http://www.polycom.com/usa/en/company/about_us/technology/siren_g7221/siren_
 and http://www.polycom.com/usa/en/company/about_us/technology/siren14_g7221c/siren14_g7221c.html 
 At the time of this packaging, Polycom does not charge for licensing.
 
-%package freeswitch-codec-speex
+%package codec-speex
 Summary:        Speex Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-codec-speex
+%description codec-speex
 Speex Codec support for FreeSWITCH open source telephony platform.
 
-%package freeswitch-codec-theora
+%package codec-theora
 Summary:        Theora Video Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-codec-theora
+%description codec-theora
 Theora Video Codec support for FreeSWITCH open source telephony platform.
 
 ######################################################################################################################
 #				FreeSWITCH Directory Modules
 ######################################################################################################################
 
-%package freeswitch-directory-ldap
+%package directory-ldap
 Summary:        LDAP Directory support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-directory-ldap
+%description directory-ldap
 LDAP Directory support for FreeSWITCH open source telephony platform.
 
 ######################################################################################################################
 #				FreeSWITCH Endpoint Modules
 ######################################################################################################################
 
-%package freeswitch-endpoint-dingaling
+%package endpoint-dingaling
 Summary:        Generic XMPP support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-endpoint-dingaling
+%description endpoint-dingaling
 XMPP support for FreeSWITCH open source telephony platform. Allows FreeSWITCH
 to be used as a client for GoogleTalk or other XMPP Servers.
 
-%package freeswitch-endpoint-gsmopen
+%package endpoint-gsmopen
 Summary:        Generic GSM enpoint support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-endpoint-gsmopen
+%description endpoint-gsmopen
 GSMopen is an endpoint (channel driver) that allows an SMS to be sent or 
 received from FreeSWITCH as well as incoming and outgoing GSM voice calls.
 SMS is handled via the standard CHAT API in FreeSWITCH.
 
-%package freeswitch-endpoint-h323
+%package endpoint-h323
 Summary:        H.323 enpoint support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-endpoint-gsmopen
+%description endpoint-gsmopen
 H.323 enpoint support for FreeSWITCH open source telephony platform
 
-%package freeswitch-endpoint-khomp
+%package endpoint-khomp
 Summary:        khomp endpoint support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-endpoint-khomp
+%description endpoint-khomp
 Khomp hardware endpoint support for FreeSWITCH open source telephony platform.
 
-%package freeswitch-endpoint-portaudio
+%package endpoint-portaudio
 Summary:        PortAudio endpoint support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 Requires:	alsa-lib
 BuildRequires:	alsa-lib-devel
 
-%description freeswitch-endpoint-portaudio
+%description endpoint-portaudio
 PortAudio endpoint support for FreeSWITCH open source telephony platform.
 
-%package freeswitch-endpoint-rtmp
+%package endpoint-rtmp
 Summary:        RTPM Endpoint support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-endpoint-dingaling
+%description endpoint-dingaling
 RTMP Endpoint support for FreeSWITCH open source telephony platform. Allows FreeSWITCH
 to be used from a RTMP client. See http://wiki.freeswitch.org/wiki/Mod_rtmp#Flex_Client
 for the OpenSouce FreeSWITCH backed Client.
 
-%package freeswitch-endpoint-skinny
+%package endpoint-skinny
 Summary:        Skinny/SCCP endpoint support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description freeswitch-endpoint-skinny
+%description endpoint-skinny
 SCCP/Skinny support for FreeSWITCH open source telephony platform.
 
 %package freetdm
@@ -848,14 +848,14 @@ Sangoma SMG-SS7 drivers for FreeTDM
 
 %endif
 
-%package freeswitch-endpoint-skypopen
+%package endpoint-skypopen
 Summary:	Skype Endpoint
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 Requires:	libX11
 BuildRequires:	libX11-devel
 
-%description freeswitch-endpoint-skypopen
+%description endpoint-skypopen
 This software (Skypopen) uses the Skype API but is not endorsed, certified or 
 otherwise approved in any way by Skype.  Skypopen is an endpoint (channel 
 driver) that uses the Skype client as an interface to the Skype network, and 
@@ -866,44 +866,160 @@ bridged, originated, answered, etc. as in all other endpoints, e.g. Sofia-SIP).
 #				FreeSWITCH Event Handler Modules
 ######################################################################################################################
 
-%package freeswitch-eventhandler-cdr-csv
+%package cdr-csv
 Summary:	CSV CDR Logger for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	 %{name} = %{version}-%{release}
 
-%description freeswitch-eventhandler-cdr-csv
+%description cdr-csv
 CSV CDR Logger for FreeSWITCH
 
-#%package freeswitch-eventhandler-cdr-mongodb
+#%package eventhandler-cdr-mongodb
 #Summary:	MongoDB CDR Logger for the FreeSWITCH open source telephony platform
 #Group:		System/Libraries
 #Requires:	 %{name} = %{version}-%{release}
 #
-#%description freeswitch-eventhandler-cdr-mongodb
+#%description eventhandler-cdr-mongodb
 #MongoDB CDR Logger for FreeSWITCH
 
-%package freeswitch-eventhandler-cdr-mongodb
+%package cdr-mongodb
 Summary:	MongoDB CDR Logger for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
 Requires:	 %{name} = %{version}-%{release}
 
-%description freeswitch-eventhandler-cdr-mongodb
+%description cdr-mongodb
 MongoDB CDR Logger for FreeSWITCH
 
+%package cdr-pg-csv
+Summary:	PostgreSQL CDR Logger for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	 %{name} = %{version}-%{release}
 
+%description cdr-pg-csv
+PostgreSQL CDR Logger for FreeSWITCH.
 
+%package cdr-sqlite
+Summary:	SQLite CDR Logger for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	 %{name} = %{version}-%{release}
 
+%description cdr-sqlite
+SQLite CDR Logger for FreeSWITCH.
+
+%package cdr-sqlite
+Summary:	SQLite CDR Logger for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	 %{name} = %{version}-%{release}
+
+%description cdr-sqlite
+SQLite CDR Logger for FreeSWITCH.
+
+%package cdr-erlang-event
+Summary:	Erlang Event Module for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	 %{name} = %{version}-%{release}
+
+%description cdr-erlang-event
+Erlang Event Module for FreeSWITCH.
+
+%package event-multicast
+Summary:	Multicast Event System for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	 %{name} = %{version}-%{release}
+
+%description event-multicast
+Multicast Event System for FreeSWITCH.
+
+%package event-zmq
+Summary:	ZeroMQ Event System for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	 %{name} = %{version}-%{release}
+
+%description event-zmq
+ZeroMQ Event System for FreeSWITCH.
+
+%package json-cdr
+Summary:	JSON CDR Logger for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description json-cdr
+JSON CDR Logger for FreeSWITCH.
+
+%package snmp
+Summary:	SNMP stats reporter for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	net-snmp
+BuildRequires:	net-snmp-devel
+
+%description snmp
+SNMP stats reporter for the FreeSWITCH open source telephony platform
+
+######################################################################################################################
+#				FreeSWITCH Media Format Modules
+######################################################################################################################
+
+%package local-stream
+Summary:	Local File Streamer for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description local-stream
+Local File Streamer for FreeSWITCH. It streams files from a directory and 
+multiple channels connected to the same stream will hear the same (looped) 
+file playback .. similar to a shoutcast stream. Useful for Music-on-hold type 
+scenarios. 
+
+%package native-file
+Summary:	Native Media File support for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description native-file
+The native file module is designed to make it easy to play sound files where no
+transcoding is necessary. The default FreeSWITCH sound files are in wav format.
+Generally, these require transcoding when being played to callers. However, if
+a native format sound file is available then FreeSWITCH can use it. 
+
+%package portaudio-stream
+Summary:	PortAudio Media Steam support for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description portaudio-stream
+Portaudio Streaming interface Audio for FreeSWITCH
+
+%package shell-stream
+Summary:	Implements Media Steaming from arbitrary shell commands for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description shell-stream
+Mod shell stream is a FreeSWITCH module to allow you to stream audio from an 
+arbitrary shell command. You could use it to read audio from a database, from 
+a soundcard, etc. 
+
+%package mod-shout
+Summary:	Implements Media Steaming from arbitrary shell commands for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description mod-shout
+Mod Shout is a FreeSWITCH module to allow you to stream audio from MP3s or a i
+shoutcast stream.
+
+%package tone-stream
+Summary:	Implements TGML Tone Generation for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description tone-stream
+Implements TGML Tone Generation for the FreeSWITCH open source telephony platform
 
 ######################################################################################################################
 #				FreeSWITCH Programing Language Modules
 ######################################################################################################################
-
-%package spidermonkey
-Summary:	JavaScript support for the FreeSWITCH open source telephony platform
-Group:		System/Libraries
-Requires:	 %{name} = %{version}-%{release}
-
-%description spidermonkey
 
 %package lua
 Summary:	Lua support for the FreeSWITCH open source telephony platform
@@ -924,9 +1040,16 @@ Requires:	perl
 Summary:        Python support for the FreeSWITCH open source telephony platform
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
-Requires:		python
+Requires:	python
 
 %description    python
+
+%package spidermonkey
+Summary:	JavaScript support for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	 %{name} = %{version}-%{release}
+
+%description spidermonkey
 
 ######################################################################################################################
 #				FreeSWITCH Say Modules
@@ -971,6 +1094,26 @@ Requires:        %{name} = %{version}-%{release}
 
 %description lang-he
 Hebrew language phrases module and directory structure for say module and voicemail
+
+######################################################################################################################
+#				FreeSWITCH Say Modules
+######################################################################################################################
+
+%package timer-posix
+Summary:        Provides posix timer for the FreeSWITCH Open Source telephone platform.
+Group:          System/Libraries
+Requires:        %{name} = %{version}-%{release}
+
+%description timer-posix
+Provides posix timer for the FreeSWITCH Open Source telephone platform.
+
+%package timer-timerfd
+Summary:        Provides Linux Timerfs based timer for the FreeSWITCH Open Source telephone platform.
+Group:          System/Libraries
+Requires:        %{name} = %{version}-%{release}
+
+%description timer-timerfd
+Provides Linux Timerfs based timer for the FreeSWITCH Open Source telephone platform.
 
 ######################################################################################################################
 #
