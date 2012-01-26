@@ -2033,23 +2033,35 @@ fi
 #
 ######################################################################################################################
 
+%files format-local-stream
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_local_stream.so*
 
+%files format-native-file
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_native_file.so*
+
+%files format-portaudio-stream
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_portaudio_stream.so*
+
+%files format-shell-stream
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_shell_stream.so*
+
+%files format-mod-shout
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_shout.so*
+
+%files format-tone-stream
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_tone_stream.so*
 
 ######################################################################################################################
 #
 #					Embedded Language Modules
 #
 ######################################################################################################################
-%files spidermonkey
-%defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_spidermonkey*.so*
-%{prefix}/lib/libjs.so*
-%{prefix}/lib/libnspr4.so
-%{prefix}/lib/libplds4.so
-%{prefix}/lib/libplc4.so
-%dir %attr(0750, freeswitch, daemon) %{prefix}/conf/autoload_configs
-%config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/autoload_configs/spidermonkey.conf.xml
-
 %files lua
 %defattr(-,freeswitch,daemon)
 %{prefix}/mod/mod_lua*.so*
@@ -2071,6 +2083,16 @@ fi
 %attr(0755, root, bin) /usr/lib/python*/site-packages/ESL.py*
 %dir %attr(0750, freeswitch, daemon) %{prefix}/conf/autoload_configs
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/autoload_configs/python.conf.xml
+
+%files spidermonkey
+%defattr(-,freeswitch,daemon)
+%{prefix}/mod/mod_spidermonkey*.so*
+%{prefix}/lib/libjs.so*
+%{prefix}/lib/libnspr4.so
+%{prefix}/lib/libplds4.so
+%{prefix}/lib/libplc4.so
+%dir %attr(0750, freeswitch, daemon) %{prefix}/conf/autoload_configs
+%config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/autoload_configs/spidermonkey.conf.xml
 
 ######################################################################################################################
 #
@@ -2143,6 +2165,8 @@ fi
 #
 ######################################################################################################################
 %changelog
+* Thu Jan 26 2012 - krice@freeswitch.org
+- complete rework of spec file
 * Tue Jun 14 2011 - michal.bielicki@seventhsignal.de
 - added mod_http_cache
 * Tue Jun 14 2011 - michal.bielicki@seventhsignal.de
