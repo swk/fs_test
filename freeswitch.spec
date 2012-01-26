@@ -374,7 +374,7 @@ Provides FreeSWITCH mod_httapi, provides an HTTP based Telephony API using a
 standard FreeSWITCH application interface as well as a cached http file format 
 interface
 
-%package application-http_cache
+%package application-http-cache
 Summary:	FreeSWITCH mod_http_cache
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
@@ -519,7 +519,7 @@ Summary:	FreeSWITCH mod_voicemail_ivr
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 
-%description application-voicemail_ivr
+%description application-voicemail-ivr
 Provides FreeSWITCH mod_voicemail_ivr. Provides a custimizable audio navigation 
 system for backend voicemail systems
 
@@ -1330,9 +1330,11 @@ fi
 		--libdir=%{prefix}/lib \
 		--enable-core-libedit-support \
 		--enable-core-odbc-support \
-                # --without-libcurl \
                 --with-openssl \
 		%{?configure_options}
+
+#$ OPTIONS I HAVE OFF                --without-libcurl \
+
 
 #Create the version header file here
 #cat src/include/switch_version.h.in | sed "s/@SVN_VERSION@/%{version}/g" > src/include/switch_version.h
@@ -1749,7 +1751,7 @@ fi
 %defattr(-,freeswitch,daemon)
 %{prefix}/mod/mod_httapi.so*
 
-%files application-http_cache
+%files application-http-cache
 %defattr(-,freeswitch,daemon)
 %{prefix}/mod/mod_http_cache.so*
 
