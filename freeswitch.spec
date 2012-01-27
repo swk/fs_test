@@ -53,7 +53,7 @@ Summary:      	FreeSWITCH open source telephony platform
 License:      	MPL1.1
 Group:        	Productivity/Telephony/Servers
 Version:      	1.1.beta1
-Release:      	trunk
+Release:      	1
 URL:          	http://www.freeswitch.org/
 Packager:     	Ken Rice
 Vendor:       	http://www.freeswitch.org/
@@ -1066,7 +1066,7 @@ Requires:        %{name} = %{version}-%{release}
 Hebrew language phrases module and directory structure for say module and voicemail
 
 ######################################################################################################################
-#				FreeSWITCH Say Modules
+#				FreeSWITCH Timer Modules
 ######################################################################################################################
 
 %package timer-posix
@@ -1205,7 +1205,7 @@ ASR_TTS_MODULES="asr_tts/mod_flite asr_tts/mod_pocketsphinx asr_tts/mod_tts_comm
 #
 ######################################################################################################################
 CODECS_MODULES="codecs/mod_amr codecs/mod_amrwb codecs/mod_bv codecs/mod_celt codecs/mod_codec2 codecs/mod_g723_1 \
-		codecs/mod_g729 codecs/mod_h26x codecs/mod_ilbc codecs/mod_mp4v codecs/mod_opus codecs/mod_silk \
+		codecs/mod_g729 codecs/mod_h26x codecs/mod_ilbc codecs/mod_isac codecs/mod_mp4v codecs/mod_opus codecs/mod_silk \
 		codecs/mod_siren codecs/mod_speex codecs/mod_theora "
 #
 %if %{build_sng_tc}
@@ -1217,8 +1217,8 @@ CODECS_MODULES+="codecs/mod_sangoma_codec"
 #					Dialplan Modules
 #
 ######################################################################################################################
-DIALPLANS_MODULES="dialplans/mod_dialplan_asterisk dialplans/mod_dialplan_directory dialplans/mod_dialplan_xml"
-
+DIALPLANS_MODULES="dialplans/mod_dialplan_directory dialplans/mod_dialplan_xml"
+#DISABLED DIALPLANS dialplans/mod_dialplan_asterisk 
 ######################################################################################################################
 #
 #					Directory Modules
@@ -1243,7 +1243,7 @@ ENDPOINTS_MODULES="endpoints/mod_dingaling ../../libs/freetdm/mod_freetdm \
 #
 ######################################################################################################################
 EVENT_HANDLERS_MODULES="event_handlers/mod_cdr_csv event_handlers/mod_cdr_pg_csv event_handlers/mod_cdr_sqlite \
-			 event_handlers/mod_event_multicast \
+			event_handlers/mod_cdr_mongodb event_handlers/mod_event_multicast \
 			event_handlers/mod_event_socket event_handlers/mod_json_cdr \
 			event_handlers/mod_snmp"
 
@@ -1536,6 +1536,7 @@ fi
 %{prefix}/mod/mod_dialplan_directory.so* 
 %{prefix}/mod/mod_dialplan_xml.so* 
 %{prefix}/mod/mod_dptools.so*
+%{prefix}/mod/mod_event_socket.so*
 %{prefix}/mod/mod_logfile.so*
 %{prefix}/mod/mod_loopback.so*
 %{prefix}/mod/mod_native_file.so*
@@ -1595,6 +1596,7 @@ fi
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/autoload_configs/fax.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/autoload_configs/fifo.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/autoload_configs/hash.conf.xml
+%config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/autoload_configs/httapi.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/autoload_configs/http_cache.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/autoload_configs/ivr.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/autoload_configs/java.conf.xml
@@ -2165,6 +2167,34 @@ fi
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/lang/he/vm/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/conf/lang/he/dir/*.xml
 %{prefix}/mod/mod_say_he.so*
+
+######################################################################################################################
+#
+#					Timer Modules
+#
+######################################################################################################################
+
+%files timer-posix
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_posix_timer.so*
+
+%files timer-timerfd
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_timerfd.so*
+
+######################################################################################################################
+#
+#					XMLINT  Modules
+#
+######################################################################################################################
+
+%files xml-cdr
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_xml_cdr.so*
+
+%files xml-curl
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_xml_curl.so*
 
 ######################################################################################################################
 #
