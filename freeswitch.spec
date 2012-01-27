@@ -874,7 +874,9 @@ MongoDB CDR Logger for FreeSWITCH
 %package event-cdr-pg-csv
 Summary:	PostgreSQL CDR Logger for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
-Requires:	 %{name} = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
+Requires:	postgresql-libs
+BuildRequires:	postgresql-devel
 
 %description event-cdr-pg-csv
 PostgreSQL CDR Logger for FreeSWITCH.
