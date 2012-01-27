@@ -37,6 +37,9 @@
 %{?with_sang_ss7:%define build_sng_ss7 1 }
 %{?with_py26_esl:%define build_py26_esl 1 }
 
+%define version 1.1.beta1
+%define release 1
+
 ######################################################################################################################
 #
 # disable rpath checking
@@ -52,8 +55,8 @@ Name:         	freeswitch
 Summary:      	FreeSWITCH open source telephony platform
 License:      	MPL1.1
 Group:        	Productivity/Telephony/Servers
-Version:      	1.1.beta1
-Release:      	1
+Version:	%{version}
+Release:	%{release}%{?dist}
 URL:          	http://www.freeswitch.org/
 Packager:     	Ken Rice
 Vendor:       	http://www.freeswitch.org/
@@ -1122,7 +1125,56 @@ Provides XML-RPC interface for the FreeSWITCH Open Source telephone platform.
 %package config-vanilla
 Summary:        Basic vanilla config set for the FreeSWITCH Open Source telephone platform.
 Group:          System/Libraries
-Requires:        %{name} = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
+Requires:	freeswitch-application-abstraction
+Requires:	freeswitch-application-avmd
+Requires:	freeswitch-application-blacklist
+Requires:	freeswitch-application-callcenter
+Requires:	freeswitch-application-cidlookup
+Requires:	freeswitch-application-conference
+Requires:	freeswitch-application-curl
+Requires:	freeswitch-application-db
+Requires:	freeswitch-application-directory
+Requires:	freeswitch-application-distributor
+Requires:	freeswitch-application-easyroute
+Requires:	freeswitch-application-enum
+Requires:	freeswitch-application-esf
+Requires:	freeswitch-application-esl
+Requires:	freeswitch-application-expr
+Requires:	freeswitch-application-fifo
+Requires:	freeswitch-application-fsk
+Requires:	freeswitch-application-fsv
+Requires:	freeswitch-application-hash
+Requires:	freeswitch-application-httapi
+Requires:	freeswitch-application-http-cache
+Requires:	freeswitch-application-lcr
+Requires:	freeswitch-application-limit
+Requires:	freeswitch-application-memcache
+Requires:	freeswitch-application-nibblebill
+Requires:	freeswitch-application-redis
+Requires:	freeswitch-application-rss
+Requires:	freeswitch-application-sms
+Requires:	freeswitch-application-snapshot
+Requires:	freeswitch-application-snom
+Requires:	freeswitch-application-soundtouch
+Requires:	freeswitch-application-spy
+Requires:	freeswitch-application-stress
+Requires:	freeswitch-application-valet_parking
+Requires:	freeswitch-application-voicemail
+Requires:	freeswitch-application-voicemail-ivr
+Requires:	freeswitch-codec-passthru-amr
+Requires:	freeswitch-codec-bv
+Requires:	freeswitch-codec-passthru-g723_1
+Requires:	freeswitch-codec-passthru-g729
+Requires:	freeswitch-codec-h26x
+Requires:	freeswitch-codec-ilbc
+Requires:	freeswitch-codec-siren
+Requires:	freeswitch-codec-speex
+Requires:	freeswitch-format-local-stream
+Requires:	freeswitch-format-native-file
+Requires:	freeswitch-format-portaudio-stream
+Requires:	freeswitch-format-tone-stream
+Requires:	freeswitch-lang-en
 
 %description config-vanilla
 Basic vanilla config set for the FreeSWITCH Open Source telephone platform.
