@@ -52,7 +52,7 @@ Name:         	freeswitch
 Summary:      	FreeSWITCH open source telephony platform
 License:      	MPL1.1
 Group:        	Productivity/Telephony/Servers
-Version:      	1.1.0
+Version:      	1.1.beta1
 Release:      	trunk
 URL:          	http://www.freeswitch.org/
 Packager:     	Ken Rice
@@ -1180,9 +1180,11 @@ APPLICATION_MODULES_AC="applications/mod_abstraction applications/mod_avmd appli
 APPLICATION_MODULES_DE="applications/mod_db applications/mod_directory applications/mod_distributor \
 			applications/mod_dptools applications/mod_easyroute applications/mod_enum applications/mod_esf \
 			applications/mod_esl applications/mod_expr"
-APPLICATION_MODULES_FR="applications/mod_fifo applications/fsk applications/mod_fsv applications/mod_hash applications/mod_httapi \
-			applications/mod_http_cache applications/mod_lcr applications/mod_limit applications/mod_memcache \
-			applications/mod_nibblebill applications/mod_redis applications/mod_rss" 
+
+APPLICATION_MODULES_FR="applications/mod_fifo applications/mod_fsk applications/mod_fsv applications/mod_hash \
+			applications/mod_httapi applications/mod_http_cache applications/mod_lcr applications/mod_limit \
+			applications/mod_memcache applications/mod_nibblebill applications/mod_redis applications/mod_rss" 
+
 APPLICATION_MODULES_SZ="applications/mod_sms applications/mod_snapshot applications/mod_snom applications/mod_soundtouch \
 			applications/mod_spandsp applications/mod_spy applications/mod_stress \
 			applications/mod_valet_parking applications/mod_voicemail \
