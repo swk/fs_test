@@ -26,7 +26,7 @@
 %define fsname  freeswitch
 # you could add a version number to be more strict
 
-%define prefix	/opt/freeswitch
+%define prefix	/usr/local/freeswitch
 %define _prefix	%{prefix}
 
 ##############################################################################

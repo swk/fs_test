@@ -1,4 +1,4 @@
-%define prefix	/opt/freeswitch
+%define prefix	/usr/local/freeswitch
 %define _prefix	%{prefix}
 
 
