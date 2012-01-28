@@ -33,11 +33,13 @@
 %define build_sng_tc 0
 %define build_py26_esl 0
 %define build_timerfd 0
+%define build_mod_esl 0
 %{?with_sang_tc:%define build_sng_tc 1 }
 %{?with_sang_isdn:%define build_sng_isdn 1 }
 %{?with_sang_ss7:%define build_sng_ss7 1 }
 %{?with_py26_esl:%define build_py26_esl 1 }
 %{?with_timerfd:%define build_timerfd 1 }
+%{?with_mod_esl:%define build_mod_esl 1 }
 
 %define version 1.1.beta1
 %define release 1
@@ -317,6 +319,7 @@ Requires:       %{name} = %{version}-%{release}
 %description application-esf
 Provides FreeSWITCH mod_esf, Extra Sip Functionality such as Multicast Support
 
+%if %{build_mod_esl}
 %package application-esl
 Summary:	FreeSWITCH mod_esl
 Group:          System/Libraries
@@ -324,6 +327,7 @@ Requires:       %{name} = %{version}-%{release}
 
 %description application-esl
 Provides FreeSWITCH mod_esl, add api commands for remote ESL commands
+%endif
 
 %package application-expr
 Summary:	FreeSWITCH mod_expr
@@ -1145,7 +1149,6 @@ Requires:	freeswitch-application-distributor
 Requires:	freeswitch-application-easyroute
 Requires:	freeswitch-application-enum
 Requires:	freeswitch-application-esf
-Requires:	freeswitch-application-esl
 Requires:	freeswitch-application-expr
 Requires:	freeswitch-application-fifo
 Requires:	freeswitch-application-fsk
@@ -1237,7 +1240,11 @@ APPLICATION_MODULES_AC="applications/mod_abstraction applications/mod_avmd appli
 			applications/mod_commands applications/mod_conference applications/mod_curl"
 APPLICATION_MODULES_DE="applications/mod_db applications/mod_directory applications/mod_distributor \
 			applications/mod_dptools applications/mod_easyroute applications/mod_enum applications/mod_esf \
-			applications/mod_esl applications/mod_expr"
+			applications/mod_expr "
+
+%if %{build_mod_esl}
+APPLICATION_MODULES_DE+="applications/mod_esl"
+%endif
 
 APPLICATION_MODULES_FR="applications/mod_fifo applications/mod_fsk applications/mod_fsv applications/mod_hash \
 			applications/mod_httapi applications/mod_http_cache applications/mod_lcr applications/mod_limit \
@@ -1792,9 +1799,11 @@ fi
 %defattr(-,freeswitch,daemon)
 %{prefix}/mod/mod_esf.so*
 
+%if %{build_mod_esl}
 %files application-esl
 %defattr(-,freeswitch,daemon)
 %{prefix}/mod/mod_esl.so*
+%endif
 
 %files application-expr
 %defattr(-,freeswitch,daemon)
