@@ -32,10 +32,12 @@
 %define build_sng_ss7 0
 %define build_sng_tc 0
 %define build_py26_esl 0
+%define build_timerfd 0
 %{?with_sang_tc:%define build_sng_tc 1 }
 %{?with_sang_isdn:%define build_sng_isdn 1 }
 %{?with_sang_ss7:%define build_sng_ss7 1 }
 %{?with_py26_esl:%define build_py26_esl 1 }
+%{?with_timerfd:%define build_timerfd 1 }
 
 %define version 1.1.beta1
 %define release 1
@@ -1082,6 +1084,7 @@ Requires:        %{name} = %{version}-%{release}
 %description timer-posix
 Provides posix timer for the FreeSWITCH Open Source telephone platform.
 
+%if %{build_timerfd}
 %package timer-timerfd
 Summary:        Provides Linux Timerfs based timer for the FreeSWITCH Open Source telephone platform.
 Group:          System/Libraries
@@ -1090,6 +1093,7 @@ Requires:        %{name} = %{version}-%{release}
 %description timer-timerfd
 Provides Linux Timerfs based timer for the FreeSWITCH Open Source telephone 
 platform.
+%endif
 
 ######################################################################################################################
 #				FreeSWITCH XML INT Modules
@@ -1336,7 +1340,10 @@ SAY_MODULES="say/mod_say_de say/mod_say_en say/mod_say_fr say/mod_say_he say/mod
 #							Timers
 #
 ######################################################################################################################
-TIMERS_MODULES="timers/mod_posix_timer timers/mod_timerfd"
+TIMERS_MODULES="timers/mod_posix_timer "
+%if %{build_timerfd}
+TIMERS_MODULES+="timers/mod_timerfd"
+%endif
 
 ######################################################################################################################
 #
@@ -1395,10 +1402,11 @@ fi
 #$ OPTIONS I HAVE OFF                --without-libcurl \
 
 
-#Create the version header file here
+##Create the version header file here
 #cat src/include/switch_version.h.in | sed "s/@SVN_VERSION@/%{version}/g" > src/include/switch_version.h
 #touch .noversion
 
+unset MODULES
 %{__make}
 
 cd libs/esl
@@ -2232,9 +2240,11 @@ fi
 %defattr(-, freeswitch, daemon)
 %{prefix}/mod/mod_posix_timer.so*
 
+%if %{build_timerfd}
 %files timer-timerfd
 %defattr(-, freeswitch, daemon)
 %{prefix}/mod/mod_timerfd.so*
+%endif
 
 ######################################################################################################################
 #
