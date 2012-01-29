@@ -42,7 +42,7 @@
 %{?with_mod_esl:%define build_mod_esl 1 }
 
 %define version 1.1.beta1
-%define release 1
+%define release 2
 
 ######################################################################################################################
 #
@@ -1503,8 +1503,8 @@ fi
 %post
 %{?run_ldconfig:%run_ldconfig}
 # Make FHS2.0 happy
-%{__mkdir} -p /etc/opt
-%{__ln_s} -f %{prefix}/conf /etc%{prefix}
+# %{__mkdir} -p /etc/opt
+# %{__ln_s} -f %{prefix}/conf /etc%{prefix}
 
 chkconfig --add freeswitch
 
