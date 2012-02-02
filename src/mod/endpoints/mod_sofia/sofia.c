@@ -2329,6 +2329,7 @@ static void parse_gateways(sofia_profile_t *profile, switch_xml_t gateways_tag)
 				*caller_id_in_from = "false",
 				*extension = NULL,
 				*proxy = NULL,
+				*options_user_agent = NULL,
 				*context = profile->context,
 				*expire_seconds = "3600",
 				*retry_seconds = "30",
@@ -2434,6 +2435,8 @@ static void parse_gateways(sofia_profile_t *profile, switch_xml_t gateways_tag)
 					ping_max = atoi(val);
 				} else if (!strcmp(var, "ping-min")) {
 					ping_min = atoi(val);
+				} else if (!strcmp(var, "ping-user-agent")) {
+					options_user_agent = val;
 				} else if (!strcmp(var, "proxy")) {
 					proxy = val;
 				} else if (!strcmp(var, "context")) {
@@ -2485,16 +2488,6 @@ static void parse_gateways(sofia_profile_t *profile, switch_xml_t gateways_tag)
 				str_rfc_5626 = switch_core_sprintf(gateway->pool, ";reg-id=%s;+sip.instance=\"<urn:uuid:%s>\"",reg_id,str_guid);
 			}
 
-			if (ping_freq) {
-				if (ping_freq >= 5) {
-					gateway->ping_freq = ping_freq;
-					gateway->ping_max = ping_max;
-					gateway->ping_min = ping_min;
-					gateway->ping = switch_epoch_time_now(NULL) + ping_freq;
-				} else {
-					switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, "ERROR: invalid ping!\n");
-				}
-			}
 
 			if ((gw_subs_tag = switch_xml_child(gateway_tag, "subscriptions"))) {
 				parse_gateway_subscriptions(profile, gateway, gw_subs_tag);
@@ -2517,6 +2510,14 @@ static void parse_gateways(sofia_profile_t *profile, switch_xml_t gateways_tag)
 				if (zstr(password)) {
 					switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, "ERROR: password param is REQUIRED!\n");
 					goto skip;
+				}
+			} else {
+				if (zstr(username)) {
+					username = "FreeSWITCH";
+				}
+
+				if (zstr(password)) {
+					password = "";
 				}
 			}
 
@@ -2577,6 +2578,7 @@ static void parse_gateways(sofia_profile_t *profile, switch_xml_t gateways_tag)
 			gateway->auth_username = switch_core_strdup(gateway->pool, auth_username);
 			gateway->register_password = switch_core_strdup(gateway->pool, password);
 			gateway->distinct_to = distinct_to;
+			gateway->options_user_agent = options_user_agent;
 
 			if (switch_true(caller_id_in_from)) {
 				sofia_set_flag(gateway, REG_FLAG_CALLERID);
@@ -2607,6 +2609,21 @@ static void parse_gateways(sofia_profile_t *profile, switch_xml_t gateways_tag)
 			gateway->register_from = switch_core_sprintf(gateway->pool, "<sip:%s@%s;transport=%s>",
 														 from_user, !zstr(from_domain) ? from_domain : proxy, register_transport);
 
+
+			if (ping_freq) {
+				if (ping_freq >= 5) {
+					gateway->ping_freq = ping_freq;
+					gateway->ping_max = ping_max;
+					gateway->ping_min = ping_min;
+					gateway->ping = switch_epoch_time_now(NULL) + ping_freq;
+					gateway->options_to_uri = switch_core_sprintf(gateway->pool, "<sip:%s;transport=%s>",
+															   !zstr(from_domain) ? from_domain : proxy, register_transport);
+					gateway->options_from_uri = switch_core_sprintf(gateway->pool, "<sip:%s;transport=%s>",
+																	profile->extrtpip ? profile->extrtpip : profile->sipip, register_transport);			
+				} else {
+					switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, "ERROR: invalid ping!\n");
+				}
+			}
 
 			if (contact_host) {
 				if (!strcmp(contact_host, "sip-ip")) {
@@ -2658,11 +2675,11 @@ static void parse_gateways(sofia_profile_t *profile, switch_xml_t gateways_tag)
 							profile->tls_sip_port : profile->sip_port, params, str_rfc_5626);
 
 				} else {
-					format = strchr(sipip, ':') ? "<sip:%s@[%s]:%d%s>" : "<sip:%s@%s:%d%s%s>";
+					format = strchr(sipip, ':') ? "<sip:%s@[%s]:%d%s>" : "<sip:%s@%s:%d%s>";
 					gateway->register_contact = switch_core_sprintf(gateway->pool, format, extension,
 							sipip,
 							sofia_glue_transport_has_tls(gateway->register_transport) ?
-							profile->tls_sip_port : profile->sip_port, params,contact_params);
+							profile->tls_sip_port : profile->sip_port, params);
 				}
 			} else {
 				if (rfc_5626) {
