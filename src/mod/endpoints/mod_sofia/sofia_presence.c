@@ -571,7 +571,13 @@ static int sofia_presence_dialog_callback(void *pArg, int argc, char **argv, cha
 {
 	struct dialog_helper *helper = (struct dialog_helper *) pArg;
 
-	if (argc == 4) {
+	if (argc >= 4) {
+
+		if (mod_sofia_globals.debug_presence > 0) {
+			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_CRIT, "CHECK DIALOG state[%s] status[%s] rpid[%s] pres[%s]\n", 
+							  argv[0], argv[1], argv[2], argv[3]);
+		}
+
 		if (!helper->hits) {
 			switch_set_string(helper->state, argv[0]);
 			switch_set_string(helper->status, argv[1]);
@@ -615,7 +621,7 @@ static void do_normal_probe(switch_event_t *event)
 	}
 
 	if (probe_euser && probe_host && (profile = sofia_glue_find_profile(probe_host))) {
-		sql = switch_mprintf("select status,rpid,presence_id from sip_dialogs "
+		sql = switch_mprintf("select state,status,rpid,presence_id from sip_dialogs "
 							 "where hostname='%q' and profile_name='%q' and "
 							 "((sip_from_user='%q' and sip_from_host='%q') or presence_id='%q@%q') order by rcd desc", 
 							 mod_sofia_globals.hostname, profile->name, probe_euser, probe_host, probe_euser, probe_host);
@@ -858,9 +864,11 @@ static void actual_sofia_presence_event_handler(switch_event_t *event)
 	char *call_id = switch_event_get_header(event, "call-id");
 	char *presence_source = switch_event_get_header(event, "presence-source");
 	char *call_info_state = switch_event_get_header(event, "presence-call-info-state");
+	const char *uuid = switch_event_get_header(event, "unique-id");
 	switch_console_callback_match_t *matches;
 	struct presence_helper helper = { 0 };			
 	int hup = 0;
+
 
 	if (!mod_sofia_globals.running) {
 		return;
@@ -1046,9 +1054,7 @@ static void actual_sofia_presence_event_handler(switch_event_t *event)
 					continue;
 				}
 
-				if (call_info) {
-					const char *uuid = switch_event_get_header(event, "unique-id");
-
+				if (call_info) {					
 					
 #if 0
 					if (mod_sofia_globals.debug_sla > 1) {
@@ -1089,12 +1095,27 @@ static void actual_sofia_presence_event_handler(switch_event_t *event)
 										 rpid, status, mod_sofia_globals.hostname, profile->name, euser, host);
 					sofia_glue_execute_sql_now(profile, &sql, SWITCH_TRUE);
 				}
+
+				if (zstr(uuid)) {
 				
-				sql = switch_mprintf("select state,status,rpid,presence_id from sip_dialogs "
-									 "where hostname='%q' and profile_name='%q' and "
-									 "((sip_from_user='%q' and sip_from_host='%q') or presence_id='%q@%q') order by rcd desc", 
-									 mod_sofia_globals.hostname, profile->name, euser, host, euser, host);
+					sql = switch_mprintf("select state,status,rpid,presence_id from sip_dialogs "
+										 "where call_info_state != 'seized' and hostname='%q' and profile_name='%q' and "
+										 "((sip_from_user='%q' and sip_from_host='%q') or presence_id='%q@%q') order by rcd desc", 
+										 mod_sofia_globals.hostname, profile->name, euser, host, euser, host);
+				} else {
+					sql = switch_mprintf("select state,status,rpid,presence_id from sip_dialogs "
+										 "where uuid != '%q' and call_info_state != 'seized' and hostname='%q' and profile_name='%q' and "
+										 "((sip_from_user='%q' and sip_from_host='%q') or presence_id='%q@%q') order by rcd desc", 
+										 uuid, mod_sofia_globals.hostname, profile->name, euser, host, euser, host);
+				}
+				
+				if (mod_sofia_globals.debug_presence > 0) {
+					switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_CRIT, "CHECK SQL: %s@%s [%s]\nhits: %d\n", euser, host, sql, dh.hits);
+				}
+
 				sofia_glue_execute_sql_callback(profile, profile->ireg_mutex, sql, sofia_presence_dialog_callback, &dh);
+
+
 				switch_safe_free(sql);
 
 				if (hup && dh.hits > 0) {
@@ -1814,7 +1835,7 @@ static void _send_presence_notify(sofia_profile_t *profile,
 
 	sofia_destination_t *dst = NULL;
 	char *contact_str, *contact, *user_via = NULL;
-	char *route_uri = NULL, *o_contact_dup = NULL, *tmp;
+	char *route_uri = NULL, *o_contact_dup = NULL, *tmp, *to_uri, *dcs = NULL;
 	const char *tp;
 	
     tmp = (char *)o_contact;
@@ -1860,6 +1881,27 @@ static void _send_presence_notify(sofia_profile_t *profile,
 
 	} else {
 		contact_str = our_contact;
+	}
+	
+	
+	if ((to_uri = sofia_glue_get_url_from_contact((char *)full_to, 1))) {
+		char *p;
+		
+		if ((p = strstr(to_uri, "sip:"))) {
+			char *q;
+			
+			p += 4;
+			if ((q = strchr(p, '@'))) {
+				*q++ = '\0';
+				
+				if ((dcs = switch_string_replace(contact_str, "mod_sofia", p))) {
+					contact_str = dcs;
+				}
+				
+			}
+		}
+
+		free(to_uri);
 	}
 
 	dst = sofia_glue_get_destination((char *) o_contact);
@@ -1959,6 +2001,7 @@ static void _send_presence_notify(sofia_profile_t *profile,
 
 	
 	switch_safe_free(route_uri);
+	switch_safe_free(dcs);
 	switch_safe_free(contact);
 
 	sofia_glue_free_destination(dst);
@@ -2456,11 +2499,17 @@ static int sofia_presence_sub_callback(void *pArg, int argc, char **argv, char *
 			if (!strcasecmp(astate, "answered")) {
 				astate = "confirmed";
 			}
-
+			
 			if (!strcasecmp(astate, "hangup")) {
 				astate = "terminated";
 			}
 
+			if (!sofia_test_pflag(profile, PFLAG_PRESENCE_DISABLE_EARLY)) {
+				if (!strcasecmp(astate, "ringing") || !strcasecmp(astate, "early")) {
+					astate = "confirmed";
+				}
+			}
+			
 			if (is_dialog) {
 
 				if (!strcasecmp(astate, "ringing")) {
@@ -3960,7 +4009,7 @@ void sofia_presence_handle_sip_i_message(int status,
 
  end:
 
-	nua_respond(nh, SIP_200_OK, NUTAG_WITH_THIS_MSG(de->data->e_msg), TAG_END());
+	nua_respond(nh, SIP_202_ACCEPTED, NUTAG_WITH_THIS_MSG(de->data->e_msg), TAG_END());
 
 }
 

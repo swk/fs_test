@@ -1104,6 +1104,7 @@ static switch_status_t conference_del_member(conference_obj_t *conference, confe
 
 		if (test_eflag(conference, EFLAG_FLOOR_CHANGE)) {
 			switch_event_create_subclass(&event, SWITCH_EVENT_CUSTOM, CONF_EVENT_MAINT);
+			conference_add_event_data(conference, event); 
 			switch_event_add_header_string(event, SWITCH_STACK_BOTTOM, "Action", "floor-change");
 			switch_event_add_header(event, SWITCH_STACK_BOTTOM, "Old-ID", "%d", member->id);
 			switch_event_add_header(event, SWITCH_STACK_BOTTOM, "New-ID", "none");
@@ -1257,15 +1258,17 @@ static void *SWITCH_THREAD_FUNC conference_video_thread_run(switch_thread_t *thr
 		}
 
 		session = conference->floor_holder->session;
-		switch_core_session_read_lock(session);
-		switch_mutex_unlock(conference->mutex);
-		if (!switch_channel_ready(switch_core_session_get_channel(session))) {
-			status = SWITCH_STATUS_FALSE;
-		} else {
-			status = switch_core_session_read_video_frame(session, &vid_frame, SWITCH_IO_FLAG_NONE, 0);
+
+		if ((status = switch_core_session_read_lock(session)) == SWITCH_STATUS_SUCCESS) {
+			switch_mutex_unlock(conference->mutex);
+			if (!switch_channel_ready(switch_core_session_get_channel(session))) {
+				status = SWITCH_STATUS_FALSE;
+			} else {
+				status = switch_core_session_read_video_frame(session, &vid_frame, SWITCH_IO_FLAG_NONE, 0);
+			}
+			switch_mutex_lock(conference->mutex);
+			switch_core_session_rwunlock(session);
 		}
-		switch_mutex_lock(conference->mutex);
-		switch_core_session_rwunlock(session);
 
 		if (!SWITCH_READ_ACCEPTABLE(status)) {
 			yield = 100000;

@@ -239,21 +239,25 @@ static void extract_header_vars(sofia_profile_t *profile, sip_t const *sip,
 			switch_stream_handle_t stream = { 0 };
 			int x = 0;
 
-			if (switch_channel_direction(channel) == SWITCH_CALL_DIRECTION_OUTBOUND) {
-				SWITCH_STANDARD_STREAM(stream);
+			SWITCH_STANDARD_STREAM(stream);
 				
-				for(vp = sip->sip_via; vp; vp = vp->v_next) {
-					char *v = sip_header_as_string(nh->nh_home, (void *) vp);
-					
-					stream.write_function(&stream, x == 0 ? "%s" : ",%s", v);
-					su_free(nh->nh_home, v);
-					
-					x++;
-				}
+			for(vp = sip->sip_via; vp; vp = vp->v_next) {
+				char *v = sip_header_as_string(nh->nh_home, (void *) vp);
 				
-				switch_channel_set_variable(channel, "sip_recover_via", (char *)stream.data);
-				free(stream.data);
+				stream.write_function(&stream, x == 0 ? "%s" : ",%s", v);
+				su_free(nh->nh_home, v);
+				
+				x++;
 			}
+			
+			switch_channel_set_variable(channel, "sip_full_via", (char *)stream.data);
+
+			if (switch_channel_direction(channel) == SWITCH_CALL_DIRECTION_OUTBOUND) {
+				switch_channel_set_variable(channel, "sip_recover_via", (char *)stream.data);
+			}
+
+			free(stream.data);
+			
 		}
 		
 		if (sip->sip_from) {
@@ -3031,6 +3035,12 @@ switch_status_t reconfig_sofia(sofia_profile_t *profile)
 						} else {
 							sofia_clear_pflag(profile, PFLAG_T38_PASSTHRU);
 						}
+					} else if (!strcasecmp(var, "presence-disable-early")) {
+						if (switch_true(val)) {
+							sofia_set_pflag(profile, PFLAG_PRESENCE_DISABLE_EARLY);
+						} else {
+							sofia_clear_pflag(profile, PFLAG_PRESENCE_DISABLE_EARLY);
+						}
 					} else if (!strcasecmp(var, "ignore-183nosdp")) {
 						if (switch_true(val)) {
 							sofia_set_pflag(profile, PFLAG_IGNORE_183NOSDP);
@@ -3356,7 +3366,7 @@ switch_status_t reconfig_sofia(sofia_profile_t *profile)
 					} else if (!strcasecmp(var, "context")) {
 						profile->context = switch_core_strdup(profile->pool, val);
 					} else if (!strcasecmp(var, "local-network-acl")) {
-						if (!strcasecmp(var, "none")) {
+						if (!strcasecmp(val, "none")) {
 							profile->local_network = NULL;
 						} else {
 							profile->local_network = switch_core_strdup(profile->pool, val);
@@ -3804,6 +3814,12 @@ switch_status_t config_sofia(int reload, char *profile_name)
 							sofia_set_pflag(profile, PFLAG_T38_PASSTHRU);
 						} else {
 							sofia_clear_pflag(profile, PFLAG_T38_PASSTHRU);
+						}
+					} else if (!strcasecmp(var, "presence-disable-early")) {
+						if (switch_true(val)) {
+							sofia_set_pflag(profile, PFLAG_PRESENCE_DISABLE_EARLY);
+						} else {
+							sofia_clear_pflag(profile, PFLAG_PRESENCE_DISABLE_EARLY);
 						}
 					} else if (!strcasecmp(var, "ignore-183nosdp")) {
 						if (switch_true(val)) {
