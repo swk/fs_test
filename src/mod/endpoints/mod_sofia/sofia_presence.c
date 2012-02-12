@@ -455,7 +455,7 @@ static void actual_sofia_presence_mwi_event_handler(switch_event_t *event)
 	if ((pname = switch_event_get_header(event, "sofia-profile"))) {
 		profile = sofia_glue_find_profile(pname);
 	}
-
+	
 	if (!profile) {
 		if (!host || !(profile = sofia_glue_find_profile(host))) {
 			char *sql;
@@ -464,7 +464,7 @@ static void actual_sofia_presence_mwi_event_handler(switch_event_t *event)
 
 			sql = switch_mprintf("select profile_name from sip_registrations where hostname='%q' and (sip_host='%s' or mwi_host='%s')", 
 								 mod_sofia_globals.hostname, host, host);
-
+			
 			if (list_profiles_full(NULL, NULL, &matches, SWITCH_FALSE) == SWITCH_STATUS_SUCCESS) {
 				switch_console_callback_match_node_t *m;
 
@@ -491,6 +491,7 @@ static void actual_sofia_presence_mwi_event_handler(switch_event_t *event)
 			}
 		}
 	}
+
 
 	if (profile->domain_name && strcasecmp(profile->domain_name, host)) {
 		host = profile->domain_name;
@@ -548,8 +549,8 @@ static void actual_sofia_presence_mwi_event_handler(switch_event_t *event)
 							 stream.data, mod_sofia_globals.hostname, profile->name, user, host);
 	} else if (call_id) {
 		sql = switch_mprintf("select sip_user,sip_host,contact,profile_name,network_ip,'%q' "
-							 "from sip_registrations where hostname='%q' and profile_name='%q' and mwi_user='%q' and mwi_host='%q' and call_id='%q'", 
-							 mod_sofia_globals.hostname, profile->name, stream.data, user, host, call_id);
+							 "from sip_registrations where hostname='%q' and profile_name='%q' and call_id='%q'", 
+							 stream.data, mod_sofia_globals.hostname, profile->name, call_id);
 	}
 
 	if (sql) {
@@ -1090,7 +1091,7 @@ static void actual_sofia_presence_event_handler(switch_event_t *event)
 				}
 				
 				if (!strcmp(proto, "dp")) {
-					sql = switch_mprintf("update sip_presence set rpid='%q',status='%q' where hostname='%q' nad profile_name='%q' and "
+					sql = switch_mprintf("update sip_presence set rpid='%q',status='%q' where hostname='%q' and profile_name='%q' and "
 										 "sip_user='%q' and sip_host='%q'",
 										 rpid, status, mod_sofia_globals.hostname, profile->name, euser, host);
 					sofia_glue_execute_sql_now(profile, &sql, SWITCH_TRUE);
@@ -2503,10 +2504,10 @@ static int sofia_presence_sub_callback(void *pArg, int argc, char **argv, char *
 			if (!strcasecmp(astate, "hangup")) {
 				astate = "terminated";
 			}
-
-			if (!sofia_test_pflag(profile, PFLAG_PRESENCE_DISABLE_EARLY)) {
+			
+			if (sofia_test_pflag(profile, PFLAG_PRESENCE_DISABLE_EARLY)) {
 				if (!strcasecmp(astate, "ringing") || !strcasecmp(astate, "early")) {
-					astate = "confirmed";
+					goto end;
 				}
 			}
 			
@@ -2749,6 +2750,9 @@ static int sofia_presence_sub_callback(void *pArg, int argc, char **argv, char *
 	}
 
 	send_presence_notify(profile, full_to, full_from, contact, expires, call_id, event, ip, port, ct, pl, NULL);
+
+
+ end:
 
 	switch_safe_free(free_me);
 
@@ -3299,7 +3303,7 @@ void sofia_presence_handle_sip_i_subscribe(int status,
 								 np.network_port, np.network_ip, orig_proto, full_to, to_tag);
 
 			switch_assert(sql != NULL);
-
+			
 
 			if (mod_sofia_globals.debug_presence > 0 || mod_sofia_globals.debug_sla > 0) {
 				switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_NOTICE, "%s SUBSCRIBE %s@%s %s@%s\n%s\n",
@@ -3545,7 +3549,7 @@ void sofia_presence_handle_sip_i_subscribe(int status,
 					switch_event_add_header_string(sevent, SWITCH_STACK_BOTTOM, "sub-call-id", call_id);
 					switch_event_fire(&sevent);
 				}
-			} else {
+			} else if (!strcasecmp(event, "presence")) {
 				if (switch_event_create(&sevent, SWITCH_EVENT_PRESENCE_IN) == SWITCH_STATUS_SUCCESS) {
 					switch_event_add_header_string(sevent, SWITCH_STACK_BOTTOM, "proto", SOFIA_CHAT_PROTO);
 					switch_event_add_header_string(sevent, SWITCH_STACK_BOTTOM, "login", profile->name);
@@ -3723,6 +3727,7 @@ void sofia_presence_handle_sip_i_publish(nua_t *nua, sofia_profile_t *profile, n
 	int count = 1, sub_count = 0;
 	char *contact_str;
 	int open = 1;
+	sofia_nat_parse_t np = { { 0 } };
 
 	if (!sip) {
 		return;
@@ -3731,7 +3736,8 @@ void sofia_presence_handle_sip_i_publish(nua_t *nua, sofia_profile_t *profile, n
 	from = sip->sip_from;
 	payload = sip->sip_payload;
 
-	contact_str = sofia_glue_gen_contact_str(profile, sip, nh, de, NULL);
+	np.fs_path = 1;
+	contact_str = sofia_glue_gen_contact_str(profile, sip, nh, de, &np);
 
 	if (from) {
 		from_user = (char *) from->a_url->url_user;
