@@ -7,23 +7,23 @@
 #  chkconfig: 345 89 14
 #  description: Starts and stops the freeswitch server daemon
 #  processname: freeswitch
-#  config: /opt/freeswitch/conf/freeswitch.conf
-#  pidfile: /opt/freeswitch/run/freeswitch.pid
+#  config: /usr/local/freeswitch/conf/freeswitch.conf
+#  pidfile: /usr/local/freeswitch/run/freeswitch.pid
 #
 
 # Source function library.
 . /etc/init.d/functions
 
 PROG_NAME=freeswitch
-PID_FILE=${PID_FILE-/var/run/freeswitch/freeswitch.pid}
+PID_FILE=${PID_FILE-/usr/local/freeswitch/run/freeswitch.pid}
 FS_USER=${FS_USER-freeswitch}
-FS_FILE=${FS_FILE-/opt/freeswitch/bin/freeswitch} 
-FS_HOME=${FS_HOME-/opt/freeswitch}
+FS_FILE=${FS_FILE-/usr/local/freeswitch/bin/freeswitch} 
+FS_HOME=${FS_HOME-/usr/local/freeswitch}
 LOCK_FILE=/var/lock/subsys/freeswitch
 FREESWITCH_ARGS="-nc"
 RETVAL=0
 
-# Source options file
+# Source usr/localions file
 if [ -f /etc/sysconfig/freeswitch ]; then
 	. /etc/sysconfig/freeswitch
 fi
