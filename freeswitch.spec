@@ -42,7 +42,7 @@
 %{?with_mod_esl:%define build_mod_esl 1 }
 
 %define version 1.1.beta1
-%define release 2
+%define release 3
 
 ######################################################################################################################
 #
@@ -53,7 +53,9 @@
 %define sysconfdir	/usr/local/freeswitch/conf
 %define _sysconfdir	%{sysconfdir}
 %define logfiledir	/usr/local/freeswitch/log
+%define _logfiledir	%{logfiledir}
 %define runtimedir	/usr/local/freeswitch/run
+%define _runtimedir	%{runtimedir}
 
 Name:         	freeswitch
 Summary:      	FreeSWITCH open source telephony platform
