@@ -42,7 +42,7 @@
 %{?with_mod_esl:%define build_mod_esl 1 }
 
 %define version 1.1.beta1
-%define release 3
+%define release 4
 
 ######################################################################################################################
 #
