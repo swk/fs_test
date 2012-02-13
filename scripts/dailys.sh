@@ -27,10 +27,10 @@ if [ -d "$dst_dir" ]; then
 fi
 
 # save local changes
-ret=$(git stash save "Save uncommitted changes before tagging.")
-if echo $ret | grep "^Saved"; then
-    stash_saved=1
-fi
+#ret=$(git stash save "Save uncommitted changes before tagging.")
+#if echo $ret | grep "^Saved"; then
+    #stash_saved=1
+#fi
 
 sed -e "s|\(AC_SUBST(SWITCH_VERSION_MAJOR, \[\).*\(\])\)|\1$major\2|" \
     -e "s|\(AC_SUBST(SWITCH_VERSION_MINOR, \[\).*\(\])\)|\1$minor\2|" \
