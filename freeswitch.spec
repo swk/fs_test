@@ -42,7 +42,7 @@
 %{?with_mod_esl:%define build_mod_esl 1 }
 
 %define version 1.1.beta1
-%define release 4
+%define release 5
 
 ######################################################################################################################
 #
@@ -74,13 +74,13 @@ Vendor:       	http://www.freeswitch.org/
 ######################################################################################################################
 Source0:        http://files.freeswitch.org/%{name}-%{version}.tar.bz2
 Source1:	http://files.freeswitch.org/downloads/libs/celt-0.10.0.tar.gz
-Source2:	http://files.freeswitch.org/downloads/libs/flite-1.3.99-latest.tar.gz
+Source2:	http://files.freeswitch.org/downloads/libs/flite-1.5.1-current.tar.bz2
 Source3:	http://files.freeswitch.org/downloads/libs/lame-3.97.tar.gz
 Source4:	http://files.freeswitch.org/downloads/libs/libshout-2.2.2.tar.gz
 Source5:	http://files.freeswitch.org/downloads/libs/mpg123-1.13.2.tar.gz
 Source6:	http://files.freeswitch.org/downloads/libs/openldap-2.4.11.tar.gz
 Source7:	http://files.freeswitch.org/downloads/libs/pocketsphinx-0.7.tar.gz
-Source8:	http://files.freeswitch.org/downloads/libs/soundtouch-1.5.0.tar.gz
+Source8:	http://files.freeswitch.org/downloads/libs/soundtouch-1.6.0.tar.gz
 Source9:	http://files.freeswitch.org/downloads/libs/sphinxbase-0.7.tar.gz
 Source10:	http://files.freeswitch.org/downloads/libs/communicator_semi_6000_20080321.tar.gz
 Source11:	http://files.freeswitch.org/downloads/libs/libmemcached-0.32.tar.gz
