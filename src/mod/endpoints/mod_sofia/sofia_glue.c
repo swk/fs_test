@@ -44,10 +44,10 @@ void sofia_glue_set_image_sdp(private_object_t *tech_pvt, switch_t38_options_t *
 	char buf[2048] = "";
 	char max_buf[128] = "";
 	char max_data[128] = "";
-	const char *ip = t38_options->local_ip;
-	uint32_t port = t38_options->local_port;
+	const char *ip;
+	uint32_t port;
 	const char *family = "IP4";
-	const char *username = tech_pvt->profile->username;
+	const char *username;
 	const char *bit_removal_on = "a=T38FaxFillBitRemoval\n";
 	const char *bit_removal_off = "";
 	
@@ -58,6 +58,13 @@ void sofia_glue_set_image_sdp(private_object_t *tech_pvt, switch_t38_options_t *
 	const char *jbig_off = "";
 	const char *var;
 	int broken_boolean;
+
+	switch_assert(tech_pvt);
+	switch_assert(t38_options);
+
+	ip = t38_options->local_ip;
+	port = t38_options->local_port;
+	username = tech_pvt->profile->username;
 
 	//sofia_clear_flag(tech_pvt, TFLAG_ENABLE_SOA);
 
@@ -2291,6 +2298,25 @@ switch_status_t sofia_glue_do_invite(switch_core_session_t *session)
 		switch_channel_set_variable(channel, "sip_to_host", sofia_glue_get_host(to_str, switch_core_session_get_pool(session)));
 		switch_channel_set_variable(channel, "sip_from_host", sofia_glue_get_host(from_str, switch_core_session_get_pool(session)));
 
+		if (!switch_channel_get_variable(channel, "presence_id")) {
+			char *from = switch_core_session_strdup(session, from_str);
+			
+			if (!strncasecmp(from, "sip:", 4)) {
+				from += 4;
+			}
+
+			if (!strncasecmp(from, "sips:", 4)) {
+				from += 5;
+			}
+
+			if ((p = strchr(from, ':')) || (p = strchr(from, ';'))) {
+				*p++ = '\0';
+			}
+			
+			switch_channel_set_variable(channel, "presence_id", from);
+			
+		}
+		
 		if (!(tech_pvt->nh = nua_handle(tech_pvt->profile->nua, NULL,
 										NUTAG_URL(url_str),
 										TAG_IF(call_id, SIPTAG_CALL_ID_STR(call_id)),
