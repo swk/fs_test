@@ -70,6 +70,8 @@ bzip2 -z -k $dst_name.tar || echo "bzip2 not available"
 xz -z -9 -k $dst_name.tar || echo "xz / xz-utils not available"
 rm -rf $dst_name.tar $dst_dir
 
+mv -f $dst_name.tar.* ~/rpmbuild/SOURCES/
+
 cat 1>&2 <<EOF
 ----------------------------------------------------------------------
 The v$ver tarballs have been rolled, now we just need to roll 

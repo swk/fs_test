@@ -41,8 +41,8 @@
 %{?with_timerfd:%define build_timerfd 1 }
 %{?with_mod_esl:%define build_mod_esl 1 }
 
-%define version 1.1.beta1
-%define release 5
+%define version %{VERSION_NUMBER}
+%define release %{BUILD_NUMBER}
 
 ######################################################################################################################
 #
