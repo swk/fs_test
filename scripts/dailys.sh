@@ -8,7 +8,7 @@ if [ ! -d .git ]; then
 fi
 
 if [ -z "$1" ]; then
-    echo "usage: ./scripts/dailys.sh MAJOR.MINOR.MICRO[.REVISION]" 1>&2
+    echo "usage: ./scripts/dailys.sh MAJOR.MINOR.MICRO[.REVISION] BUILD_NUMBER" 1>&2
     exit 1;
 fi
 
@@ -18,8 +18,10 @@ minor=$(echo "$ver" | cut -d. -f2)
 micro=$(echo "$ver" | cut -d. -f3)
 rev=$(echo "$ver" | cut -d. -f4)
 
+build="$2"
+
 dst_name="freeswitch-$major.$minor.$micro"
-dst_dir="$src_repo/../$dst_name"
+dst_dir="/tmp/$dst_name"
 
 if [ -d "$dst_dir" ]; then
     echo "error: destination directory $dst_dir already exists." 1>&2
@@ -70,7 +72,22 @@ bzip2 -z -k $dst_name.tar || echo "bzip2 not available"
 xz -z -9 -k $dst_name.tar || echo "xz / xz-utils not available"
 rm -rf $dst_name.tar $dst_dir
 
-mv -f $dst_name.tar.* ~/rpmbuild/SOURCES/
+mkdir -p $src_repo/rpmbuild
+mv -f $dst_name.tar.* $src_repo/rpmbuild/.
+
+cd $src_repo
+
+rpmbuild --define "VERSION_NUMBER $ver" \
+	--define "BUILD_NUMBER $build" \
+	--define "_topdir %(pwd)/rpmbuild" \
+	--define "_builddir %{_topdir}" \
+	--define "_rpmdir %{_topdir}" \
+	--define "_srcrpmdir %{_topdir}" \
+	--define '_rpmfilename %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm' \
+	--define "_sourcedir  %{_topdir}" \
+	-ba freeswitch.spec 
+
+ls $src_repo/*rpm
 
 cat 1>&2 <<EOF
 ----------------------------------------------------------------------
