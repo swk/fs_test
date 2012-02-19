@@ -70,9 +70,9 @@ cd ..
 cd $dst_parent
 tar -cvf $dst_name.tar $dst_name
 
-gzip -9 -c $dst_name.tar > $dst_name.tar.gz || echo "gzip not available"
+# gzip -9 -c $dst_name.tar > $dst_name.tar.gz || echo "gzip not available"
 bzip2 -z -k $dst_name.tar || echo "bzip2 not available"
-xz -z -9 -k $dst_name.tar || echo "xz / xz-utils not available"
+# xz -z -9 -k $dst_name.tar || echo "xz / xz-utils not available"
 rm -rf $dst_name.tar $dst_dir
 
 mkdir -p $src_repo/rpmbuild/SOURCES
@@ -80,7 +80,7 @@ mv -f $dst_name.tar.* $src_repo/rpmbuild/SOURCES/.
 
 cd $src_repo/rpmbuild/SOURCES
 
-for i in `grep 'Source..\?:' $src_repo/freeswitch.spec |awk '{print $2}'`; do wget $i; done
+for i in `grep 'Source..\?:' $src_repo/freeswitch.spec|grep -v Source0 |awk '{print $2}'`; do wget $i; done
 
 cd $src_repo
 
