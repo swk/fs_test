@@ -95,12 +95,14 @@ rpmbuild --define "VERSION_NUMBER $ver" \
 # --define "_sourcedir  %{_topdir}" \
 # --define "_builddir %{_topdir}" \
 
-ls $src_repo/rpmbuild/*rpm
+
+mkdir $src_repo/RPMS
+mv $src_repo/rpmbuild/RPMS/x86_64/*rpm $src_repo/RPMS/.
 
 cat 1>&2 <<EOF
 ----------------------------------------------------------------------
-The v$ver tarballs have been rolled, now we just need to roll 
-packages with them
+The v$ver-$build tarballs and RPMs have been rolled, now we 
+just need to roll packages with them
 ----------------------------------------------------------------------
 EOF
 
