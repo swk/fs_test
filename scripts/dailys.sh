@@ -21,6 +21,7 @@ rev=$(echo "$ver" | cut -d. -f4)
 build="$2"
 
 dst_name="freeswitch-$major.$minor.$micro"
+dst_parent="/tmp/"
 dst_dir="/tmp/$dst_name"
 
 if [ -d "$dst_dir" ]; then
@@ -66,28 +67,35 @@ rm -f docs/COPYING
 rm -f docs/ChangeLog
 rm -rf .git
 cd ..
-tar -cvf $dst_name.tar $dst_dir
+cd $dst_parent
+tar -cvf $dst_name.tar $dst_name
+
 gzip -9 -c $dst_name.tar > $dst_name.tar.gz || echo "gzip not available"
 bzip2 -z -k $dst_name.tar || echo "bzip2 not available"
 xz -z -9 -k $dst_name.tar || echo "xz / xz-utils not available"
 rm -rf $dst_name.tar $dst_dir
 
-mkdir -p $src_repo/rpmbuild
-mv -f $dst_name.tar.* $src_repo/rpmbuild/.
+mkdir -p $src_repo/rpmbuild/SOURCES
+mv -f $dst_name.tar.* $src_repo/rpmbuild/SOURCES/.
+
+cd $src_repo/rpmbuild/SOURCES
+
+for i in `grep 'Source..\?:' $src_repo/freeswitch.spec |awk '{print $2}'`; do wget $i; done
 
 cd $src_repo
 
 rpmbuild --define "VERSION_NUMBER $ver" \
 	--define "BUILD_NUMBER $build" \
 	--define "_topdir %(pwd)/rpmbuild" \
-	--define "_builddir %{_topdir}" \
 	--define "_rpmdir %{_topdir}" \
 	--define "_srcrpmdir %{_topdir}" \
-	--define '_rpmfilename %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm' \
-	--define "_sourcedir  %{_topdir}" \
 	-ba freeswitch.spec 
 
-ls $src_repo/*rpm
+# --define '_rpmfilename %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm' \
+# --define "_sourcedir  %{_topdir}" \
+# --define "_builddir %{_topdir}" \
+
+ls $src_repo/rpmbuild/*rpm
 
 cat 1>&2 <<EOF
 ----------------------------------------------------------------------
