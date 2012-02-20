@@ -97,7 +97,7 @@ rpmbuild --define "VERSION_NUMBER $ver" \
 
 
 mkdir $src_repo/RPMS
-mv $src_repo/rpmbuild/x86_64/*.rpm $src_repo/RPMS/.
+mv $src_repo/rpmbuild/*/*.rpm $src_repo/RPMS/.
 
 cat 1>&2 <<EOF
 ----------------------------------------------------------------------
