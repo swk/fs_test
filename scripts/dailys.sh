@@ -75,7 +75,7 @@ bzip2 -z -k $dst_name.tar || echo "bzip2 not available"
 # xz -z -9 -k $dst_name.tar || echo "xz / xz-utils not available"
 rm -rf $dst_name.tar $dst_dir
 
-mkdir -p $src_repo/rpmbuild/SOURCES
+mkdir -p $src_repo/rpmbuild/{SOURCES,BUILD,BUILDROOT,i386,x86_64,SOURCES,SPECS}
 mv -f $dst_name.tar.* $src_repo/rpmbuild/SOURCES/.
 
 cd $src_repo/rpmbuild/SOURCES
@@ -96,7 +96,7 @@ rpmbuild --define "VERSION_NUMBER $ver" \
 # --define "_builddir %{_topdir}" \
 
 
-mkdir $src_repo/RPMS
+mkdir $src_repo/RPMS 
 mv $src_repo/rpmbuild/*/*.rpm $src_repo/RPMS/.
 
 cat 1>&2 <<EOF
