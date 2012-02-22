@@ -1124,7 +1124,7 @@ static void actual_sofia_presence_event_handler(switch_event_t *event)
 				
 
 				switch_safe_free(sql);
-
+#if 0
 				if (hup && dh.hits > 0) {
 					/* sigh, mangle this packet to simulate a call that is up instead of hungup */
 					event->flags |= EF_UNIQ_HEADERS;
@@ -1155,7 +1155,7 @@ static void actual_sofia_presence_event_handler(switch_event_t *event)
 						switch_event_add_header_string(event, SWITCH_STACK_BOTTOM, "answer-state", "confirmed"); 
 					}
 				}
-
+#endif
 
 				if (zstr(call_id) && (dh.hits && presence_source && (!strcasecmp(presence_source, "register") || switch_stristr("register", status)))) {
 					goto done;
@@ -2487,9 +2487,12 @@ static int sofia_presence_sub_callback(void *pArg, int argc, char **argv, char *
 								  "<dialog-info xmlns=\"urn:ietf:params:xml:ns:dialog-info\" "
 								  "version=\"%s\" state=\"%s\" entity=\"%s\">\n", version, default_dialog, clean_id);
 								  
-								  
 		}
 
+		if (!strcasecmp(astate, "hangup")) {
+			astate = "terminated";
+		}
+		
 		if (!zstr(uuid)) {
 			if (!zstr(answer_state)) {
 				astate = answer_state;
@@ -2507,9 +2510,6 @@ static int sofia_presence_sub_callback(void *pArg, int argc, char **argv, char *
 				astate = "confirmed";
 			}
 			
-			if (!strcasecmp(astate, "hangup")) {
-				astate = "terminated";
-			}
 			
 			if (is_dialog) {
 
@@ -2629,7 +2629,7 @@ static int sofia_presence_sub_callback(void *pArg, int argc, char **argv, char *
 			if (in) {
 				open = "open";
 
-				if (switch_false(resub)) {
+				if (!strcasecmp(astate, "terminated") && switch_false(resub)) {
 					int term;
 
 					const char *direction = switch_event_get_header(helper->event, "Caller-Direction");
@@ -3559,8 +3559,9 @@ void sofia_presence_handle_sip_i_subscribe(int status,
 					switch_event_add_header_string(sevent, SWITCH_STACK_BOTTOM, "proto", SOFIA_CHAT_PROTO);
 					switch_event_add_header_string(sevent, SWITCH_STACK_BOTTOM, "login", profile->name);
 					switch_event_add_header_string(sevent, SWITCH_STACK_BOTTOM, "presence-source", "subscribe");
-					switch_event_add_header(sevent, SWITCH_STACK_BOTTOM, "from", "%s@%s", to_user, to_host);
+					switch_event_add_header(sevent, SWITCH_STACK_BOTTOM, "from", "%s@%s", from_user, from_host);
 					switch_event_add_header(sevent, SWITCH_STACK_BOTTOM, "to", "%s@%s", to_user, to_host);
+					switch_event_add_header_string(sevent, SWITCH_STACK_BOTTOM, "expires", exp_delta_str);
 					switch_event_add_header_string(sevent, SWITCH_STACK_BOTTOM, "alt_event_type", "dialog");
 					switch_event_add_header_string(sevent, SWITCH_STACK_BOTTOM, "rpid", "unknown");
 					switch_event_add_header_string(sevent, SWITCH_STACK_BOTTOM, "status", "Registered");
