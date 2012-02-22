@@ -897,13 +897,15 @@ Requires:	 %{name} = %{version}-%{release}
 %description event-cdr-sqlite
 SQLite CDR Logger for FreeSWITCH.
 
-#%package event-erlang-event
-#Summary:	Erlang Event Module for the FreeSWITCH open source telephony platform
-#Group:		System/Libraries
-#Requires:	 %{name} = %{version}-%{release}
-#
-#%description event-erlang-event
-#Erlang Event Module for FreeSWITCH.
+%package event-erlang-event
+Summary:	Erlang Event Module for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	 %{name} = %{version}-%{release}
+Requires:	erlang
+BuildRequires:	erlang
+
+%description event-erlang-event
+Erlang Event Module for FreeSWITCH.
 
 %package event-multicast
 Summary:	Multicast Event System for the FreeSWITCH open source telephony platform
@@ -1310,11 +1312,11 @@ ENDPOINTS_MODULES="endpoints/mod_dingaling ../../libs/freetdm/mod_freetdm \
 #
 ######################################################################################################################
 EVENT_HANDLERS_MODULES="event_handlers/mod_cdr_csv event_handlers/mod_cdr_pg_csv event_handlers/mod_cdr_sqlite \
-			event_handlers/mod_cdr_mongodb event_handlers/mod_event_multicast \
+			event_handlers/mod_cdr_mongodb event_handlers/mod_erlang_event event_handlers/mod_event_multicast \
 			event_handlers/mod_event_socket event_handlers/mod_json_cdr \
 			event_handlers/mod_snmp"
 
-#### BUILD ISSUES NET RESOLVED FOR RELEASE event_handlers/mod_event_zmq event_handlers/mod_erlang_event
+#### BUILD ISSUES NET RESOLVED FOR RELEASE event_handlers/mod_event_zmq 
 ######################################################################################################################
 #
 #					File and Audio Format Handlers
@@ -2089,9 +2091,9 @@ fi
 %defattr(-, freeswitch, daemon)
 %{prefix}/mod/mod_cdr_sqlite.so*
 
-#%files event-erlang-event
-#%defattr(-, freeswitch, daemon)
-#%{prefix}/mod/mod_erlang-event.so*
+%files event-erlang-event
+%defattr(-, freeswitch, daemon)
+%{prefix}/mod/mod_erlang_event.so*
 
 %files event-multicast
 %defattr(-, freeswitch, daemon)
