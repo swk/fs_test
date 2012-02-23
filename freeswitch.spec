@@ -1404,7 +1404,7 @@ fi
                 --infodir=%{_infodir} \
                 --mandir=%{_mandir} \
 		--sysconfdir=%{sysconfdir} \
-		--runtimedir=${runtimedir} \
+		--runtimedir=%{runtimedir} \
 		--libdir=%{prefix}/lib \
 		--with-logfiledir=%{logfiledir}
 		--with-rundir=%{runtimedir}
