@@ -116,6 +116,7 @@ switch_status_t sofia_presence_chat_send(switch_event_t *message_event)
 	char header[256] = "";
 	char *route_uri = NULL;
 	const char *network_ip = NULL, *network_port = NULL, *from_proto;
+	char *extra_headers = NULL;
 	
 	proto = switch_event_get_header(message_event, "proto");
 	from_proto = switch_event_get_header(message_event, "from_proto");
@@ -128,6 +129,8 @@ switch_status_t sofia_presence_chat_send(switch_event_t *message_event)
 	
 	network_ip = switch_event_get_header(message_event, "to_sip_ip");
 	network_port = switch_event_get_header(message_event, "to_sip_port");
+
+	extra_headers = sofia_glue_get_extra_headers_from_event(message_event, SOFIA_SIP_HEADER_PREFIX);
 
 	if (!to) {
 		switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, "Missing To: header.\n");
@@ -322,6 +325,7 @@ switch_status_t sofia_presence_chat_send(switch_event_t *message_event)
 					SIPTAG_CONTENT_TYPE_STR(ct),
 					SIPTAG_PAYLOAD_STR(body),
 					SIPTAG_HEADER_STR(header),
+					TAG_IF(!zstr(extra_headers), SIPTAG_HEADER_STR(extra_headers)),
 					TAG_END());
 
 		sofia_glue_free_destination(dst);
@@ -2489,10 +2493,6 @@ static int sofia_presence_sub_callback(void *pArg, int argc, char **argv, char *
 								  
 		}
 
-		if (!strcasecmp(astate, "hangup")) {
-			astate = "terminated";
-		}
-		
 		if (!zstr(uuid)) {
 			if (!zstr(answer_state)) {
 				astate = answer_state;
@@ -2523,6 +2523,11 @@ static int sofia_presence_sub_callback(void *pArg, int argc, char **argv, char *
 
 				if (holding) {
 					astate = "early";
+				}
+
+
+				if (!strcasecmp(astate, "hangup")) {
+					astate = "terminated";
 				}
 				
 				stream.write_function(&stream, "<dialog id=\"%s\" direction=\"%s\">\n", uuid, direction);
@@ -2629,7 +2634,7 @@ static int sofia_presence_sub_callback(void *pArg, int argc, char **argv, char *
 			if (in) {
 				open = "open";
 
-				if (!strcasecmp(astate, "terminated") && switch_false(resub)) {
+				if (switch_false(resub)) {
 					int term;
 
 					const char *direction = switch_event_get_header(helper->event, "Caller-Direction");
@@ -2672,7 +2677,7 @@ static int sofia_presence_sub_callback(void *pArg, int argc, char **argv, char *
 
 						rpid = "on-the-phone";
 						force_status = 1;
-					} else if (!strcmp(astate, "terminated")) {
+					} else if (!strcmp(astate, "terminated") || !strcmp(astate, "hangup")) {
 						rpid = "online";
 						dialog_rpid = "";
 						force_event_status = "Available";

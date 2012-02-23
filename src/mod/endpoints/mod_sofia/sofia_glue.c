@@ -590,14 +590,23 @@ void sofia_glue_set_local_sdp(private_object_t *tech_pvt, const char *ip, switch
 				
 				if (cur_ptime != this_ptime) {
 					char *bp = buf;
-					cur_ptime = this_ptime;			
+					int both = 1;
 
+					cur_ptime = this_ptime;			
+					
 					if ((!zstr(tech_pvt->local_crypto_key) && sofia_test_flag(tech_pvt, TFLAG_SECURE))) {
 						generate_m(tech_pvt, buf, sizeof(buf), port, cur_ptime, append_audio, sr, use_cng, cng_type, map, verbose_sdp, 1);
 						bp = (buf + strlen(buf));
+
+						/* asterisk can't handle AVP and SAVP in sep streams, way to blow off the spec....*/
+						if (switch_true(switch_channel_get_variable(tech_pvt->channel, "sdp_secure_savp_only"))) {
+							both = 0;
+						}
 					}
-					
-					generate_m(tech_pvt, bp, sizeof(buf) - strlen(buf), port, cur_ptime, append_audio, sr, use_cng, cng_type, map, verbose_sdp, 0);
+
+					if (both) {
+						generate_m(tech_pvt, bp, sizeof(buf) - strlen(buf), port, cur_ptime, append_audio, sr, use_cng, cng_type, map, verbose_sdp, 0);
+					}
 				}
 				
 			}
@@ -1975,6 +1984,30 @@ void sofia_glue_set_extra_headers(switch_core_session_t *session, sip_t const *s
 	switch_channel_api_on(channel, "api_on_sip_extra_headers");
 }
 
+char *sofia_glue_get_extra_headers_from_event(switch_event_t *event, const char *prefix)
+{
+	char *extra_headers = NULL;
+	switch_stream_handle_t stream = { 0 };
+	switch_event_header_t *hp;
+
+	SWITCH_STANDARD_STREAM(stream);
+	for (hp = event->headers; hp; hp = hp->next) {
+		if (!zstr(hp->name) && !zstr(hp->value) && !strncasecmp(hp->name, prefix, strlen(prefix))) {
+			char *name = strdup(hp->name);
+			const char *hname = name + strlen(prefix);
+			stream.write_function(&stream, "%s: %s\r\n", hname, (char *)hp->value);
+			free(name);
+		}
+	}
+
+	if (!zstr((char *) stream.data)) {
+		extra_headers = stream.data;
+	} else {
+		switch_safe_free(stream.data);
+	}
+
+	return extra_headers;
+}
 
 switch_status_t sofia_glue_do_invite(switch_core_session_t *session)
 {
@@ -2300,21 +2333,25 @@ switch_status_t sofia_glue_do_invite(switch_core_session_t *session)
 
 		if (!switch_channel_get_variable(channel, "presence_id")) {
 			char *from = switch_core_session_strdup(session, from_str);
-			
+			const char *s;
+
+			if ((s = switch_stristr("<", from))) {
+				from = (char *)s + 1;
+			}
+
 			if (!strncasecmp(from, "sip:", 4)) {
 				from += 4;
 			}
 
-			if (!strncasecmp(from, "sips:", 4)) {
+			if (!strncasecmp(from, "sips:", 5)) {
 				from += 5;
 			}
 
-			if ((p = strchr(from, ':')) || (p = strchr(from, ';'))) {
+			if ((p = strchr(from, ':')) || (p = strchr(from, ';')) || (p = strchr(from, '>'))) {
 				*p++ = '\0';
 			}
 			
 			switch_channel_set_variable(channel, "presence_id", from);
-			
 		}
 		
 		if (!(tech_pvt->nh = nua_handle(tech_pvt->profile->nua, NULL,
