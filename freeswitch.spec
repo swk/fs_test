@@ -1407,7 +1407,6 @@ fi
 		--localstatedir=%{runtimedir} \
 		--libdir=%{prefix}/lib \
 		--with-logfiledir=%{logfiledir}
-		--with-rundir=%{runtimedir}
 		--enable-core-libedit-support \
 		--enable-core-odbc-support \
                 --with-openssl \
