@@ -48,13 +48,13 @@
 #
 # disable rpath checking
 %define __arch_install_post /usr/lib/rpm/check-buildroot
-%define _prefix   /usr/local/freeswitch
+%define _prefix   /usr
 %define prefix    %{_prefix}
-%define sysconfdir	/usr/local/freeswitch/conf
+%define sysconfdir	/etc/freeswitch
 %define _sysconfdir	%{sysconfdir}
-%define logfiledir	/usr/local/freeswitch/log
+%define logfiledir	/var/log/freeswitch
 %define _logfiledir	%{logfiledir}
-%define runtimedir	/usr/local/freeswitch/run
+%define runtimedir	/var/run/freeswitch
 %define _runtimedir	%{runtimedir}
 
 Name:         	freeswitch
@@ -1512,6 +1512,8 @@ fi
 # Make FHS2.0 happy
 # %{__mkdir} -p /etc/opt
 # %{__ln_s} -f %{prefix}/conf /etc%{prefix}
+
+chown freeswitch:daemon /var/log/freeswitch /var/run/freeswitch
 
 chkconfig --add freeswitch
 
