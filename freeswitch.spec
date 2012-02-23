@@ -1405,6 +1405,8 @@ fi
                 --mandir=%{_mandir} \
 		--sysconfdir=%{sysconfdir} \
 		--libdir=%{prefix}/lib \
+		--with-logfiledir=%{logfiledir}
+		--with-rundir=%{runtimedir}
 		--enable-core-libedit-support \
 		--enable-core-odbc-support \
                 --with-openssl \
