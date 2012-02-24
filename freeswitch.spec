@@ -1406,7 +1406,7 @@ fi
 		--sysconfdir=%{sysconfdir} \
 		--localstatedir=%{runtimedir} \
 		--libdir=%{prefix}/lib \
-		--with-logfiledir=%{logfiledir}
+		--with-logfiledir=%{logfiledir} \
 		--enable-core-libedit-support \
 		--enable-core-odbc-support \
                 --with-openssl \
