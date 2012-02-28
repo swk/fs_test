@@ -61,7 +61,6 @@
 # Layout of packages FHS (Redhat/SUSE), FS (Standard FreeSWITCH layout using /usr/local), OPT (/opt based layout)
 %define packagelayout	FHS
 
-%if %{packagelayout} == FHS
 %define	PREFIX		%{_prefix}
 %define EXECPREFIX	%{_exec_prefix}
 %define BINDIR		%{_bindir}
@@ -93,45 +92,6 @@
 %define RECORDINGSDIR	%{LOCALSTATEDIR}/recordings
 %define PKGCONFIGDIR	%{_datarootdir}/%name/pkgconfig
 %define HOMEDIR		%{LOCALSTATEDIR}
-%else
-%if %{packagelayout} == FS
-%define	PREFIX		/usr/local/freeswitch
-%define EXECPREFIX	%{PREFIX}
-%define BINDIR		%{EXECPREFIX}/bin
-%define SBINDIR		%{EXECPREFIX}/sbin
-%define LIBEXECDIR	%{EXECPREFIX}/libexec
-%define SYSCONFDIR	%{PREFIX}/bin
-%define SHARESTATEDIR	%{PREFIX}/com
-%define LOCALSTATEDIR	%{PREFIX}/var
-%define LIBDIR		%{EXECPREFIX}/lib
-%define INCLUDEDIR	%{PREFIX}/include
-%define DATAROOTDIR	%{PREFIX}/share
-%define DATADIR		%{DATAROOTDIR}
-%define INFODIR		%{DATAROOTDIR}/info
-%define LOCALEDIR	%{DATAROOTDIR}/locale
-%define MANDIR		%{DATAROOTDIR}/man
-%define DOCDIR		%{DATAROOTDIR}/doc/freeswitch
-%define HTMLDIR  	%{DOCDIR}
-%define DVIDIR  	%{DOCDIR}
-%define PDFDIR  	%{DOCDIR}
-%define PSDIR  		%{DOCDIR}
-%define LOGFILEDIR	%{LOCALSTATEDIR}/log
-%define MODINSTDIR	%{PREFIX}/mod
-%define RUNDIR		%{PREFIX}/run
-%define DBDIR		%{PREFIX}/db
-%define HTDOCSDIR	%{PREFIX}/htdocs
-%define SOUNDSDIR	%{PREFIX}/sounds
-%define GRAMMARDIR	%{PREFIX}/grammar
-%define SCRIPTDIR	%{PREFIX}/scripts
-%define RECORDINGSDIR	%{PREFIX}/recordings
-%define PKGCONFIGDIR	%{LIBDIR}/pkgconfig
-%define HOMEDIR		%{PREFIX}
-%endif
-%endif
-
-
-
-
 
 
 Name:         	freeswitch
@@ -180,7 +140,7 @@ BuildRequires: openldap-devel
 %endif
 BuildRequires: autoconf
 BuildRequires: automake
-#BuildRequires: curl-devel
+BuildRequires: curl-devel
 BuildRequires: gcc-c++
 BuildRequires: gnutls-devel
 BuildRequires: libtool >= 1.5.17
@@ -216,7 +176,7 @@ Requires: python26
 Requires: alsa-lib
 Requires: libogg
 Requires: libvorbis
-#Requires: curl
+Requires: curl
 Requires: ncurses
 Requires: openssl
 Requires: unixODBC
@@ -1529,7 +1489,6 @@ fi
 --with-pkgconfigdir=%{PKGCONFIGDIR} \
 --with-odbc \
 --with-erlang \
---with-libcurl \
 --with-openssl \
 %{?configure_options}
 
@@ -1544,8 +1503,6 @@ fi
 #touch .noversion
 
 unset MODULES
-%{__make} core
-
 %{__make}
 
 cd libs/esl
