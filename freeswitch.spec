@@ -140,7 +140,7 @@ BuildRequires: openldap-devel
 %endif
 BuildRequires: autoconf
 BuildRequires: automake
-#BuildRequires: curl-devel
+BuildRequires: curl-devel
 BuildRequires: gcc-c++
 BuildRequires: gnutls-devel
 BuildRequires: libtool >= 1.5.17
@@ -176,7 +176,7 @@ Requires: python26
 Requires: alsa-lib
 Requires: libogg
 Requires: libvorbis
-#Requires: curl
+Requires: curl
 Requires: ncurses
 Requires: openssl
 Requires: unixODBC
@@ -1490,7 +1490,6 @@ fi
 --with-odbc \
 --with-erlang \
 --with-openssl \
---without-libcurl \
 %{?configure_options}
 
 
