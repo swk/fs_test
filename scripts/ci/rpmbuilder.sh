@@ -26,10 +26,6 @@ dst_dir="/tmp/$dst_name"
 
 mkdir -p $src_repo/rpmbuild/{SOURCES,BUILD,BUILDROOT,i386,x86_64,SOURCES,SPECS}
 
-find $src_repo/rpmbuild
-
-# mv -f $dst_name.tar.* $src_repo/rpmbuild/SOURCES/.
-
 cd $src_repo
 
 rpmbuild --define "VERSION_NUMBER $ver" \
