@@ -34,6 +34,7 @@
 %define build_py26_esl 0
 %define build_timerfd 0
 %define build_mod_esl 0
+
 %{?with_sang_tc:%define build_sng_tc 1 }
 %{?with_sang_isdn:%define build_sng_isdn 1 }
 %{?with_sang_ss7:%define build_sng_ss7 1 }
@@ -1435,24 +1436,7 @@ then
    ./bootstrap.sh -j
 fi
 
-
-# %configure -C \
-	# --prefix=%{prefix} \
-	# --infodir=%{_infodir} \
-	# --mandir=%{_mandir} \
-	#--sysconfdir=%{sysconfdir} \
-	#--localstatedir=%{runtimedir} \
-	#--libdir=%{prefix}/lib/freeswitch \
-	#--with-dbdir=/var/lib/freeswitch/db \
-	#--with-htdocsdir=/usr/share/freeswitch/htdocs \
-	#--with-soundsdir=/usr/share/freeswitch/sounds \
-	#--with-grammardir=/usr/share/freeswitch/grammar \
-	#--with-scriptdir=/var/lib/freeswitch/scripts \
-	#--with-logfiledir=%{logfiledir} \
-	#--enable-core-libedit-support \
-	#--enable-core-odbc-support \
-	#--with-openssl \
-	#%{?configure_options}
+echo "STARTING CONFIGURE"
 
 %configure -C \
 --prefix=%{PREFIX} \
@@ -1492,15 +1476,7 @@ fi
 --with-openssl \
 %{?configure_options}
 
-
-
-
-#$ OPTIONS I HAVE OFF                --without-libcurl \
-
-
-##Create the version header file here
-#cat src/include/switch_version.h.in | sed "s/@SVN_VERSION@/%{version}/g" > src/include/switch_version.h
-#touch .noversion
+echo "END OF CONFIGURE RUN"
 
 unset MODULES
 %{__make}
