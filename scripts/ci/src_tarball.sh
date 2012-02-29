@@ -56,7 +56,7 @@ fi
 #    git stash pop
 #fi
 
-mkdir -p $dst_parent
+mkdir -p $dst_dir
 cp -r . $dst_dir
 
 cd $dst_dir
