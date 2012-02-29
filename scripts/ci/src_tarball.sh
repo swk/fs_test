@@ -68,12 +68,17 @@ rm -f docs/COPYING
 rm -f docs/ChangeLog
 rm -rf .git
 cd ..
+
 cd $dst_parent
+
+ls
+
 tar -cvf $dst_name.tar $dst_name
 
 # gzip -9 -c $dst_name.tar > $dst_name.tar.gz || echo "gzip not available"
 bzip2 -z -k $dst_name.tar || echo "bzip2 not available"
 # xz -z -9 -k $dst_name.tar || echo "xz / xz-utils not available"
+
 rm -rf $dst_name.tar $dst_dir
 
 mkdir -p $src_repo/src_dist
