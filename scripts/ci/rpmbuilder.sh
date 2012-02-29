@@ -26,11 +26,9 @@ dst_dir="/tmp/$dst_name"
 
 mkdir -p $src_repo/rpmbuild/{SOURCES,BUILD,BUILDROOT,i386,x86_64,SOURCES,SPECS}
 
-mv -f $dst_name.tar.* $src_repo/rpmbuild/SOURCES/.
+find $src_repo/rpmbuild
 
-cd $src_repo/rpmbuild/SOURCES
-
-for i in `grep 'Source..\?:' $src_repo/freeswitch.spec|grep -v Source0 |awk '{print $2}'`; do wget $i; done
+# mv -f $dst_name.tar.* $src_repo/rpmbuild/SOURCES/.
 
 cd $src_repo
 
