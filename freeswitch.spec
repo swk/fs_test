@@ -72,6 +72,7 @@
 %define LOCALSTATEDIR	%{_localstatedir}/lib/%name
 %define LIBDIR		%{_libdir}
 %define INCLUDEDIR	%{_includedir}
+%define _datarootdir	%{_prefix}/share
 %define DATAROOTDIR	%{_datarootdir}
 %define DATADIR		%{_datadir}
 %define INFODIR		%{_infodir}
