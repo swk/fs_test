@@ -1437,15 +1437,12 @@ then
    ./bootstrap.sh -j
 fi
 
-echo "STARTING CONFIGURE"
-
 %configure -C \
 --prefix=%{PREFIX} \
 --exec-prefix=%{EXECPREFIX} \
 --bindir=%{BINDIR} \
 --sbindir=%{SBINDIR} \
 --libexecdir=%{LIBEXECDIR} \
---sysconfdir=%{SYSCONFDIR} \
 --sharedstatedir=%{SHARESTATEDIR} \
 --localstatedir=%{LOCALSTATEDIR} \
 --libdir=%{LIBDIR} \
@@ -1458,7 +1455,7 @@ echo "STARTING CONFIGURE"
 --with-rundir=%{RUNDIR} \
 --with-dbdir=%{DBDIR} \
 --with-htdocsdir=%{HTDOCSDIR} \
---with-soundsdir=%SOUNDSDIRs \
+--with-soundsdir=%{SOUNDSDIR} \
 --enable-core-odbc-support \
 --enable-core-libedit-support \
 --with-grammardir=%{GRAMMARDIR} \
@@ -1469,8 +1466,6 @@ echo "STARTING CONFIGURE"
 --with-erlang \
 --with-openssl \
 %{?configure_options}
-
-echo "END OF CONFIGURE RUN"
 
 unset MODULES
 %{__make}
@@ -1536,12 +1531,12 @@ cd ../..
 %if %{build_sng_ss7}
 #do not delete a thing
 %else
-%{__rm} -f %{buildroot}/%{prefix}/mod/ftmod_sangoma_ss7*
+%{__rm} -f %{buildroot}/%{MODINSTDIR}/ftmod_sangoma_ss7*
 %endif
 %if %{build_sng_isdn}
 #do not delete a thing
 %else
-%{__rm} -f %{buildroot}/%{prefix}/mod/ftmod_sangoma_isdn*
+%{__rm} -f %{buildroot}/%{MODINSTDIR}/ftmod_sangoma_isdn*
 %endif
 
 
@@ -1599,12 +1594,12 @@ fi
 #################################### Basic Directory Structure #######################################################
 #
 %dir %attr(0750, freeswitch, daemon) %{sysconfdir}
-%dir %attr(0750, freeswitch, daemon) %{prefix}/db
-%dir %attr(0750, freeswitch, daemon) %{prefix}/grammar
-%dir %attr(0750, freeswitch, daemon) %{prefix}/htdocs
+%dir %attr(0750, freeswitch, daemon) %{DBDIR}
+%dir %attr(0750, freeswitch, daemon) %{GRAMMARDIR}
+%dir %attr(0750, freeswitch, daemon) %{HTDOCSDIR}
 %dir %attr(0750, freeswitch, daemon) %{logfiledir}
 %dir %attr(0750, freeswitch, daemon) %{runtimedir}
-%dir %attr(0750, freeswitch, daemon) %{prefix}/scripts
+%dir %attr(0750, freeswitch, daemon) %{SCRIPTDIR}
 #
 #################################### Config Directory Structure #######################################################
 #
@@ -1625,8 +1620,8 @@ fi
 #
 #################################### Grammar Directory Structure #####################################################
 #
-%dir %attr(0750, freeswitch, daemon) %{prefix}/grammar/model
-%dir %attr(0750, freeswitch, daemon) %{prefix}/grammar/model/communicator
+%dir %attr(0750, freeswitch, daemon) %{GRAMMARDIR}/model
+%dir %attr(0750, freeswitch, daemon) %{GRAMMARDIR}/model/communicator
 %ifos linux
 %config(noreplace) %attr(0644, freeswitch, daemon) /etc/monit.d/freeswitch.monitrc
 %endif
@@ -1637,7 +1632,7 @@ fi
 #						Other Fíles
 #
 ######################################################################################################################
-%config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/htdocs/*
+%config(noreplace) %attr(0640, freeswitch, daemon) %{HTDOCSDIR}/*
 %ifos linux
 /etc/rc.d/init.d/freeswitch
 /etc/sysconfig/freeswitch
@@ -1654,28 +1649,28 @@ fi
 #
 ######################################################################################################################
 %attr(0755, freeswitch, daemon) %{prefix}/bin/*
-%{prefix}/lib/libfreeswitch*.so*
+%{LIBDIR}/libfreeswitch*.so*
 ######################################################################################################################
 #
 #			Modules in Alphabetical Order, please keep them that way..
 #
 ######################################################################################################################
-%{prefix}/mod/mod_cdr_csv.so*
-%{prefix}/mod/mod_console.so*
-%{prefix}/mod/mod_commands.so*
-%{prefix}/mod/mod_dialplan_directory.so* 
-%{prefix}/mod/mod_dialplan_xml.so* 
-%{prefix}/mod/mod_dptools.so*
-%{prefix}/mod/mod_event_socket.so*
-%{prefix}/mod/mod_logfile.so*
-%{prefix}/mod/mod_loopback.so*
-%{prefix}/mod/mod_native_file.so*
-%{prefix}/mod/mod_sndfile.so*
-%{prefix}/mod/mod_sofia.so*
-%{prefix}/mod/mod_spandsp.so*
-%{prefix}/mod/mod_syslog.so*
-%{prefix}/mod/mod_tone_stream.so*
-%{prefix}/mod/mod_xml_rpc.so* 
+%{MODINSTDIR}/mod_cdr_csv.so*
+%{MODINSTDIR}/mod_console.so*
+%{MODINSTDIR}/mod_commands.so*
+%{MODINSTDIR}/mod_dialplan_directory.so* 
+%{MODINSTDIR}/mod_dialplan_xml.so* 
+%{MODINSTDIR}/mod_dptools.so*
+%{MODINSTDIR}/mod_event_socket.so*
+%{MODINSTDIR}/mod_logfile.so*
+%{MODINSTDIR}/mod_loopback.so*
+%{MODINSTDIR}/mod_native_file.so*
+%{MODINSTDIR}/mod_sndfile.so*
+%{MODINSTDIR}/mod_sofia.so*
+%{MODINSTDIR}/mod_spandsp.so*
+%{MODINSTDIR}/mod_syslog.so*
+%{MODINSTDIR}/mod_tone_stream.so*
+%{MODINSTDIR}/mod_xml_rpc.so* 
 ######################################################################################################################
 #
 #						Package for the developer
@@ -1683,12 +1678,12 @@ fi
 ######################################################################################################################
 %files devel
 %defattr(-, freeswitch, daemon)
-%{prefix}/lib/*.a
-%{prefix}/lib/*.la
-%{prefix}/lib/pkgconfig/*
-%{prefix}/mod/*.a
-%{prefix}/mod/*.la
-%{prefix}/include/*.h
+%{LIBDIR}/*.a
+%{LIBDIR}/*.la
+%{PKGCONFIGDIR}/*
+%{MODINSTDIR}/*.a
+%{MODINSTDIR}/*.la
+%{INCLUDEDIR}/*.h
 
 
 ######################################################################################################################
@@ -1798,8 +1793,8 @@ fi
 ######################################################################################################################
 #						Grammar Files
 ######################################################################################################################
-%config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/grammar/default.dic
-%config(noreplace) %attr(0640, freeswitch, daemon) %{prefix}/grammar/model/communicator/*
+%config(noreplace) %attr(0640, freeswitch, daemon) %{GRAMMARDIR}/default.dic
+%config(noreplace) %attr(0640, freeswitch, daemon) %{GRAMMARDIR}/model/communicator/*
 
 ### END OF config-vanilla
 
@@ -1810,149 +1805,149 @@ fi
 ######################################################################################################################
 %files application-abstraction
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_abstraction.so*
+%{MODINSTDIR}/mod_abstraction.so*
 
 %files application-avmd
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_avmd.so*
+%{MODINSTDIR}/mod_avmd.so*
 
 %files application-blacklist
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_blacklist.so*
+%{MODINSTDIR}/mod_blacklist.so*
 
 %files application-callcenter
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_callcenter.so*
+%{MODINSTDIR}/mod_callcenter.so*
 
 %files application-cidlookup
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_cidlookup.so*
+%{MODINSTDIR}/mod_cidlookup.so*
 
 %files application-conference
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_conference.so*
+%{MODINSTDIR}/mod_conference.so*
 
 %files application-curl
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_curl.so*
+%{MODINSTDIR}/mod_curl.so*
 
 %files application-db
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_db.so*
+%{MODINSTDIR}/mod_db.so*
 
 %files application-directory
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_directory.so*
+%{MODINSTDIR}/mod_directory.so*
 
 %files application-distributor
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_distributor.so*
+%{MODINSTDIR}/mod_distributor.so*
 
 %files application-easyroute
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_easyroute.so*
+%{MODINSTDIR}/mod_easyroute.so*
 
 %files application-enum
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_enum.so*
+%{MODINSTDIR}/mod_enum.so*
 
 %files application-esf
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_esf.so*
+%{MODINSTDIR}/mod_esf.so*
 
 %if %{build_mod_esl}
 %files application-esl
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_esl.so*
+%{MODINSTDIR}/mod_esl.so*
 %endif
 
 %files application-expr
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_expr.so*
+%{MODINSTDIR}/mod_expr.so*
 
 %files application-fifo
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_fifo.so*
+%{MODINSTDIR}/mod_fifo.so*
 
 %files application-fsk
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_fsk.so*
+%{MODINSTDIR}/mod_fsk.so*
 
 %files application-fsv
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_fsv.so*
+%{MODINSTDIR}/mod_fsv.so*
 
 %files application-hash
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_hash.so*
+%{MODINSTDIR}/mod_hash.so*
 
 %files application-httapi
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_httapi.so*
+%{MODINSTDIR}/mod_httapi.so*
 
 %files application-http-cache
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_http_cache.so*
+%{MODINSTDIR}/mod_http_cache.so*
 
 %files application-lcr
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_lcr.so*
+%{MODINSTDIR}/mod_lcr.so*
 
 %files application-limit
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_limit.so*
+%{MODINSTDIR}/mod_limit.so*
 
 %files application-memcache
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_memcache.so*
+%{MODINSTDIR}/mod_memcache.so*
 
 %files application-nibblebill
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_nibblebill.so*
+%{MODINSTDIR}/mod_nibblebill.so*
 
 %files application-redis
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_redis.so*
+%{MODINSTDIR}/mod_redis.so*
 
 %files application-rss
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_rss.so*
+%{MODINSTDIR}/mod_rss.so*
 
 %files application-sms
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_sms.so*
+%{MODINSTDIR}/mod_sms.so*
 
 %files application-snapshot
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_snapshot.so*
+%{MODINSTDIR}/mod_snapshot.so*
 
 %files application-snom
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_snom.so*
+%{MODINSTDIR}/mod_snom.so*
 
 %files application-soundtouch
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_soundtouch.so*
+%{MODINSTDIR}/mod_soundtouch.so*
 
 %files application-spy
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_spy.so*
+%{MODINSTDIR}/mod_spy.so*
 
 %files application-stress
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_stress.so*
+%{MODINSTDIR}/mod_stress.so*
 
 %files application-valet_parking
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_valet_parking.so*
+%{MODINSTDIR}/mod_valet_parking.so*
 
 %files application-voicemail
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_voicemail.so*
+%{MODINSTDIR}/mod_voicemail.so*
 
 %files application-voicemail-ivr
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_voicemail_ivr.so*
+%{MODINSTDIR}/mod_voicemail_ivr.so*
 
 ######################################################################################################################
 #
@@ -1961,19 +1956,19 @@ fi
 ######################################################################################################################
 %files asrtts-flite
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_flite.so*
+%{MODINSTDIR}/mod_flite.so*
 
 %files asrtts-pocketsphinx
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_pocketsphinx.so*
+%{MODINSTDIR}/mod_pocketsphinx.so*
 
 %files asrtts-tts-commandline
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_tts_commandline.so*
+%{MODINSTDIR}/mod_tts_commandline.so*
 
 %files asrtts-unimrcp
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_unimrcp.so*
+%{MODINSTDIR}/mod_unimrcp.so*
 
 ######################################################################################################################
 #
@@ -1983,74 +1978,74 @@ fi
 
 %files codec-passthru-amr
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_amr.so*
+%{MODINSTDIR}/mod_amr.so*
 
 %files codec-passthru-amrwb
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_amrwb.so*
+%{MODINSTDIR}/mod_amrwb.so*
 
 %files codec-bv
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_bv.so*
+%{MODINSTDIR}/mod_bv.so*
 
 %files codec-celt
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_celt.so*
+%{MODINSTDIR}/mod_celt.so*
 
 %files codec-codec2
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_codec2.so*
+%{MODINSTDIR}/mod_codec2.so*
 
 
 %files codec-passthru-g723_1
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_g723_1.so*
+%{MODINSTDIR}/mod_g723_1.so*
 
 %files codec-passthru-g729
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_g729.so*
+%{MODINSTDIR}/mod_g729.so*
 
 %files codec-h26x
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_h26x.so*
+%{MODINSTDIR}/mod_h26x.so*
 
 %files codec-ilbc
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_ilbc.so*
+%{MODINSTDIR}/mod_ilbc.so*
 
 %files codec-isac
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_isac.so*
+%{MODINSTDIR}/mod_isac.so*
 
 %files codec-mp4v
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_mp4v.so*
+%{MODINSTDIR}/mod_mp4v.so*
 
 %files codec-opus
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_opus.so*
+%{MODINSTDIR}/mod_opus.so*
 
 %if %{build_sng_tc}
 %files sangoma-codec
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_sangoma_codec.so*
+%{MODINSTDIR}/mod_sangoma_codec.so*
 %endif
 
 %files codec-silk
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_silk.so*
+%{MODINSTDIR}/mod_silk.so*
 
 %files codec-siren
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_siren.so*
+%{MODINSTDIR}/mod_siren.so*
 
 %files codec-speex
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_speex.so*
+%{MODINSTDIR}/mod_speex.so*
 
 %files codec-theora
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_theora.so*
+%{MODINSTDIR}/mod_theora.so*
 
 ######################################################################################################################
 #
@@ -2060,7 +2055,7 @@ fi
 
 %files directory-ldap
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_theora.so*
+%{MODINSTDIR}/mod_theora.so*
 
 ######################################################################################################################
 #
@@ -2070,35 +2065,35 @@ fi
 
 %files endpoint-dingaling
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_dingaling.so*
+%{MODINSTDIR}/mod_dingaling.so*
 
 #%files endpoint-gsmopen
 #%defattr(-,freeswitch,daemon)
-#%{prefix}/mod/mod_gsmopen.so*
+#%{MODINSTDIR}/mod_gsmopen.so*
 
 #%files endpoint-h323
 #%defattr(-,freeswitch,daemon)
-#%{prefix}/mod/mod_h323.so*
+#%{MODINSTDIR}/mod_h323.so*
 
 #%files endpoint-khomp
 #%defattr(-,freeswitch,daemon)
-#%{prefix}/mod/mod_khomp.so*
+#%{MODINSTDIR}/mod_khomp.so*
 
 %files endpoint-portaudio
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_portaudio.so*
+%{MODINSTDIR}/mod_portaudio.so*
 
 %files endpoint-rtmp
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_rtmp.so*
+%{MODINSTDIR}/mod_rtmp.so*
 
 %files endpoint-skinny
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_skinny.so*
+%{MODINSTDIR}/mod_skinny.so*
 
 %files endpoint-skypopen
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_skypopen.so*
+%{MODINSTDIR}/mod_skypopen.so*
 
 ######################################################################################################################
 #
@@ -2113,21 +2108,21 @@ fi
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/freetdm.conf
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/wanpipe.conf
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/zt.conf
-%{prefix}/lib/libfreetdm.so*
-%{prefix}/mod/mod_freetdm.so*
-%{prefix}/mod/ftmod_skel*.so*
-%{prefix}/mod/ftmod_[a-r,t-z]*.so*
+%{LIBDIR}/libfreetdm.so*
+%{MODINSTDIR}/mod_freetdm.so*
+%{MODINSTDIR}/ftmod_skel*.so*
+%{MODINSTDIR}/ftmod_[a-r,t-z]*.so*
 
 %if %{build_sng_ss7}
 %files freetdm-sng-ss7
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/ftmod_sangoma_ss7.so*
+%{MODINSTDIR}/ftmod_sangoma_ss7.so*
 %endif
 
 %if %{build_sng_isdn}
 %files freetdm-sng-isdn
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/ftmod_sangoma_isdn.so*
+%{MODINSTDIR}/ftmod_sangoma_isdn.so*
 %endif
 
 ######################################################################################################################
@@ -2138,35 +2133,35 @@ fi
 
 %files event-cdr-mongodb
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_cdr_mongodb.so*
+%{MODINSTDIR}/mod_cdr_mongodb.so*
 
 %files event-cdr-pg-csv
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_cdr_pg_csv.so*
+%{MODINSTDIR}/mod_cdr_pg_csv.so*
 
 %files event-cdr-sqlite
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_cdr_sqlite.so*
+%{MODINSTDIR}/mod_cdr_sqlite.so*
 
 %files event-erlang-event
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_erlang_event.so*
+%{MODINSTDIR}/mod_erlang_event.so*
 
 %files event-multicast
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_event_multicast.so*
+%{MODINSTDIR}/mod_event_multicast.so*
 
 #%files event-zmq
 #%defattr(-, freeswitch, daemon)
-#%{prefix}/mod/mod_xmq.so*
+#%{MODINSTDIR}/mod_xmq.so*
 
 %files event-json-cdr
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_json_cdr.so*
+%{MODINSTDIR}/mod_json_cdr.so*
 
 %files event-snmp
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_snmp.so*
+%{MODINSTDIR}/mod_snmp.so*
 
 ######################################################################################################################
 #
@@ -2176,27 +2171,27 @@ fi
 
 %files format-local-stream
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_local_stream.so*
+%{MODINSTDIR}/mod_local_stream.so*
 
 %files format-native-file
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_native_file.so*
+%{MODINSTDIR}/mod_native_file.so*
 
 %files format-portaudio-stream
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_portaudio_stream.so*
+%{MODINSTDIR}/mod_portaudio_stream.so*
 
 %files format-shell-stream
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_shell_stream.so*
+%{MODINSTDIR}/mod_shell_stream.so*
 
 %files format-mod-shout
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_shout.so*
+%{MODINSTDIR}/mod_shout.so*
 
 %files format-tone-stream
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_tone_stream.so*
+%{MODINSTDIR}/mod_tone_stream.so*
 
 ######################################################################################################################
 #
@@ -2205,20 +2200,20 @@ fi
 ######################################################################################################################
 %files lua
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_lua*.so*
+%{MODINSTDIR}/mod_lua*.so*
 %dir %attr(0750, freeswitch, daemon) %{sysconfdir}/autoload_configs
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/lua.conf.xml
 
 %files perl
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_perl*.so*
+%{MODINSTDIR}/mod_perl*.so*
 %{prefix}/perl/*
 %dir %attr(0750, freeswitch, daemon) %{sysconfdir}/autoload_configs
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/perl.conf.xml
 
 %files python
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_python*.so*
+%{MODINSTDIR}/mod_python*.so*
 %attr(0644, root, bin) /usr/lib/python*/site-packages/freeswitch.py*
 %attr(0755, root, bin) /usr/lib/python*/site-packages/_ESL.so*
 %attr(0755, root, bin) /usr/lib/python*/site-packages/ESL.py*
@@ -2227,11 +2222,11 @@ fi
 
 %files spidermonkey
 %defattr(-,freeswitch,daemon)
-%{prefix}/mod/mod_spidermonkey*.so*
-%{prefix}/lib/libjs.so*
-%{prefix}/lib/libnspr4.so
-%{prefix}/lib/libplds4.so
-%{prefix}/lib/libplc4.so
+%{MODINSTDIR}/mod_spidermonkey*.so*
+%{LIBDIR}/libjs.so*
+%{LIBDIR}/libnspr4.so
+%{LIBDIR}/libplds4.so
+%{LIBDIR}/libplc4.so
 %dir %attr(0750, freeswitch, daemon) %{sysconfdir}/autoload_configs
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/spidermonkey.conf.xml
 
@@ -2252,7 +2247,7 @@ fi
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/en/vm/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/en/dir/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/en/ivr/*.xml
-%{prefix}/mod/mod_say_en.so*
+%{MODINSTDIR}/mod_say_en.so*
 
 %files lang-de
 %defattr(-, freeswitch, daemon)
@@ -2262,7 +2257,7 @@ fi
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/de/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/de/demo/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/de/vm/*.xml
-%{prefix}/mod/mod_say_de.so*
+%{MODINSTDIR}/mod_say_de.so*
 
 %files lang-fr
 %defattr(-, freeswitch, daemon)
@@ -2274,7 +2269,7 @@ fi
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/fr/demo/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/fr/vm/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/fr/dir/*.xml
-%{prefix}/mod/mod_say_fr.so*
+%{MODINSTDIR}/mod_say_fr.so*
 
 %files lang-ru
 %defattr(-, freeswitch, daemon)
@@ -2286,7 +2281,7 @@ fi
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/ru/demo/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/ru/vm/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/ru/dir/*.xml
-%{prefix}/mod/mod_say_ru.so*
+%{MODINSTDIR}/mod_say_ru.so*
 
 %files lang-he
 %defattr(-, freeswitch, daemon)
@@ -2298,7 +2293,7 @@ fi
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/he/demo/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/he/vm/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/lang/he/dir/*.xml
-%{prefix}/mod/mod_say_he.so*
+%{MODINSTDIR}/mod_say_he.so*
 
 ######################################################################################################################
 #
@@ -2308,12 +2303,12 @@ fi
 
 %files timer-posix
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_posix_timer.so*
+%{MODINSTDIR}/mod_posix_timer.so*
 
 %if %{build_timerfd}
 %files timer-timerfd
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_timerfd.so*
+%{MODINSTDIR}/mod_timerfd.so*
 %endif
 
 ######################################################################################################################
@@ -2324,11 +2319,11 @@ fi
 
 %files xml-cdr
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_xml_cdr.so*
+%{MODINSTDIR}/mod_xml_cdr.so*
 
 %files xml-curl
 %defattr(-, freeswitch, daemon)
-%{prefix}/mod/mod_xml_curl.so*
+%{MODINSTDIR}/mod_xml_curl.so*
 
 ######################################################################################################################
 #
