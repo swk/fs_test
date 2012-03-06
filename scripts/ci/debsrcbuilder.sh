@@ -34,14 +34,14 @@ cp src_dist/$dst_name.tar.bz2 $src_repo/debbuild/freeswitch_${dst_version}.orig.
 # Build the debian source package first, from the source tar file.
 cd $src_repo/debbuild/$dst_name
 
-dch -v $dst_version "Nightly Build"
+dch -v $dst_version-$rev "Nightly Build"
 
 dpkg-buildpackage -rfakeroot -S -us -uc
 
 
 cat 1>&2 <<EOF
 ----------------------------------------------------------------------
-The v$ver-$build RPMs have been rolled, now we 
+The v$ver-$build DEB-SRCs have been rolled, now we 
 just need to push them to the YUM Repo
 ----------------------------------------------------------------------
 EOF
