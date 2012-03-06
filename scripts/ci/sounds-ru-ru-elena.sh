@@ -22,7 +22,7 @@ rpmbuild --define "VERSION_NUMBER $ver" \
 	--define "_topdir %(pwd)/rpmbuild" \
 	--define "_rpmdir %{_topdir}" \
 	--define "_srcrpmdir %{_topdir}" \
-	-ba freeswitch-sounds-en-us-callie.spec
+	-ba freeswitch-sounds-en-RU-elena.spec
 
 mkdir $src_repo/RPMS 
 mv $src_repo/rpmbuild/*/*.rpm $src_repo/RPMS/.
