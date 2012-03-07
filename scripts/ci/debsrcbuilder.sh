@@ -38,11 +38,17 @@ dch -v $dst_version-$build "Nightly Build"
 
 dpkg-buildpackage -rfakeroot -S -us -uc
 
+status=$?
 
+if[$status -gt 0 ]
+then
+    exit $status
+else
 cat 1>&2 <<EOF
 ----------------------------------------------------------------------
 The v$ver-$build DEB-SRCs have been rolled, now we 
 just need to push them to the YUM Repo
 ----------------------------------------------------------------------
 EOF
-
+    
+fi
