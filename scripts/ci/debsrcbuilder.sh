@@ -40,8 +40,7 @@ dpkg-buildpackage -rfakeroot -S -us -uc
 
 status=$?
 
-if[$status -gt 0 ]
-then
+if [ $status -gt 0 ]; then
     exit $status
 else
 cat 1>&2 <<EOF
