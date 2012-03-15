@@ -16,37 +16,28 @@ ver="$1"
 major=$(echo "$ver" | cut -d. -f1)
 minor=$(echo "$ver" | cut -d. -f2)
 micro=$(echo "$ver" | cut -d. -f3)
-rev=$(echo "$ver" | cut -d. -f4)
 
 build="$2"
 
-dst_name="freeswitch-$major.$minor.$micro"
-dst_parent="/tmp/"
-dst_dir="/tmp/$dst_name"
+cd rpmbuild/SOURCES
 
-mkdir -p $src_repo/rpmbuild/{SOURCES,BUILD,BUILDROOT,i386,x86_64,SPECS}
+wget http://files.freeswitch.org/freeswitch-sounds-en-us-callie-48000-$ver.tar.gz
 
-cd $src_repo
+cd ../..
 
 rpmbuild --define "VERSION_NUMBER $ver" \
-	--define "BUILD_NUMBER $build" \
+	--define "BUILD_NUMBER 1" \
 	--define "_topdir %(pwd)/rpmbuild" \
 	--define "_rpmdir %{_topdir}" \
 	--define "_srcrpmdir %{_topdir}" \
-	-ba freeswitch.spec 
-
-# --define '_rpmfilename %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm' \
-# --define "_sourcedir  %{_topdir}" \
-# --define "_builddir %{_topdir}" \
-
+	-ba freeswitch-sounds-en-us-callie.spec
 
 mkdir $src_repo/RPMS 
 mv $src_repo/rpmbuild/*/*.rpm $src_repo/RPMS/.
 
 cat 1>&2 <<EOF
 ----------------------------------------------------------------------
-The v$ver-$build RPMs have been rolled, now we 
-just need to push them to the YUM Repo
+The Sound RPMs have been rolled
 ----------------------------------------------------------------------
 EOF
 
